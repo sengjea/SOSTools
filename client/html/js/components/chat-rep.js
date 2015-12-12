@@ -3,7 +3,7 @@ var React = require('react');
 
 var Header = require('./header.js');
 var LeftPane = require('./left-pane/left-pane.js');
-var RightPane = require('./right-pane.js');
+var RightPane = require('./right-pane/right-pane.js');
 
 var ChatRep = React.createClass({
   propTypes: {},
