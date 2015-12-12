@@ -13,7 +13,7 @@ io.on('connection', function (socket) {
   socket.on('message', function (type, data) { 
     console.log('message : ' + type + ' : ' + JSON.stringify(data));
     var output = MessageHandler.handle(type, data);
-    socket.emit('message', output);
+    socket.emit(type, output);
   });
 
   socket.on('disconnect', function () { 

@@ -17,7 +17,7 @@ var MessageHandler = {
     } 
     var output = [];
     processors[type].forEach(function(callback) {
-      output.push(callback(type, data));
+      output.push(callback(data));
     });
     return output;
   },

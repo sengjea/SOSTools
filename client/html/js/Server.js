@@ -7,7 +7,7 @@ var Server = {
     Server._socket = socket;
     Server._socket.on('connect', function(){
       SOSEvents.emit('connected');
-      Server.start();
+      Server.authenticate();
     });
     Server._socket.on('message', function(data){
       SOSEvents.emit('message', data);
@@ -16,12 +16,18 @@ var Server = {
       SOSEvents.emit('disconnected');
     }); 
   },
-  start: function() {
+  authenticate: function() {
     if (window.localStorage.authToken) {
-      Server._socket.send('get_token', {});
-    } else {
-      SOSEvents.emit('authenticated');
+      SOSEvents.emit('authenticated', window.localStorage.authToken);
+      return
     }
+
+    Server._socket.on('get_token', function(data) {
+      var token =  data[0].token;
+      window.localStorage.setItem('authToken', token);
+      SOSEvents.emit('authenticated', token);
+    });
+    Server._socket.send('get_token', {})
   }
 };
 
