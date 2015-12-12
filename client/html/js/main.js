@@ -5,9 +5,12 @@ var ReactDOM = require('react-dom');
 var Server = require('./Server.js');
 var SOSEvents = require('./SOSEvents.js');
 
-window.SOSEvents = SOSEvents;
 SOSEvents.addListener('connected', function() {
   console.log('Yay! We\'re connected!');
+});
+
+SOSEvents.addListener('authenticated', function(token) {
+  console.log('Authenticated: ' + token);
 });
 
 var ChatRep = require('./components/chat-rep.js');
