@@ -3,11 +3,17 @@ var auth = require('./lib/auth.js');
 var MessageHandler = require('./message_handler/MessageHandler.js');
 var AuthMessageProcessor = require('./message_processor/AuthMessageProcessor.js');
 var SendMessageProcessor = require('./message_processor/SendMessageProcessor.js');
+var GetOtherChatIDs = require('./message_processor/GetOtherChatIDs.js');
+var GetOwnChatIDs = require('./message_processor/GetOwnChatIDs.js');
+var JoinChatProcessor = require('./message_processor/JoinChatProcessor.js');
 
 
 MessageHandler.registerProcessors([
   AuthMessageProcessor, 
-  SendMessageProcessor
+  SendMessageProcessor,
+  GetOtherChatIDs,
+  GetOwnChatIDs,
+  JoinChatProcessor
 ]);
 
 console.log('Starting the server');

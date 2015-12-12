@@ -24,12 +24,13 @@ module.exports = {
       token = _genAuthToken(username, password); 
     } else {
 	  token = _genHelpeeAuthToken();
-	  username = undefined;
+
+	  data.chats.push({chatID: data.newChatID(),
+		conversation: [], tokens: [token]});
 	}
 
-	data.tokens.push({repName: username, token: token});
+	data.tokens.push({isRep: isRep, token: token});
 
-    data.active_sessions[token] = username;
     return token;
   }
 } 
