@@ -36,11 +36,11 @@ AllChatsProcessor.register('get_other_chat_ids', function(params) {
 		// Return only those conversations 
 		// with a single token associated
 		// with them.
-		return data.filter(function(elem)) {
+		return data.filter(function(elem) {
 			return elem.tokens.length === 1;
-		}.map(function(elem) {
+		}).map(function(elem) {
 			return elem.chatID;
-		}
+		});
 	}
 });
 
