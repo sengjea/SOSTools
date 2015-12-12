@@ -1,5 +1,6 @@
-function MessageProcessor() {};
-MessageProcessor.prototype.registeredProcessors = {};
+function MessageProcessor() {
+  this.registeredProcessors = {};
+};
 MessageProcessor.prototype.register = function(type, callback) {
   this.registeredProcessors[type] = callback; 
 }
