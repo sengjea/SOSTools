@@ -7,7 +7,10 @@ SendMessageProcessor.register('send_message', function(data) {
 	var token = data['sender_token'];
 	auth.log[token].push(data);
 
-	var receiver_tokens = data['receiver_tokens'];
+	var message = data['message'];
+
+	
+
 });
 
 module.exports = SendMessageProcessor;

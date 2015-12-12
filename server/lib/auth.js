@@ -1,4 +1,5 @@
 var md5 = require('md5');
+var data = require('./Data.js');
 
 var users = {
   'test_rep' : 'test_password',
@@ -6,22 +7,29 @@ var users = {
   'test3' : 'pass'
 };
 
-var active_sessions = {};
-var _log = {};
 
 function _genAuthToken(username, password) {
   return md5(username + ':' + password);
 }
 
+function _genHelpeeAuthToken() {
+  return md5(Math.random())
+}
+
 module.exports = {
   genAuthToken: function(username, password) {
     var token;
-    if (users[username] && users[username] === password) {
+	var isRep = users[username] && users[username] === password;
+    if (isRep) {
       token = _genAuthToken(username, password); 
-      active_sessions[token] = username;
-      return token;
-    } 
-    return false;
-  },
-  log: _log
-}
+    } else {
+	  token = _genHelpeeAuthToken();
+	  username = undefined;
+	}
+
+	data.tokens.push({repName: username, token: token});
+
+    data.active_sessions[token] = username;
+    return token;
+  }
+} 
