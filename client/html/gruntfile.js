@@ -14,7 +14,7 @@ module.exports = function(grunt) {
       dev: {
         options: {
           debug: true,
-          transform: ['reactify']
+          transform: [require('grunt-react').browserify]
         },
         files: {
           'build/bundle.js': 'js/**/*.js'
@@ -23,7 +23,7 @@ module.exports = function(grunt) {
       build: {
         options: {
           debug: false,
-          transform: ['reactify']
+          transform: [require('grunt-react').browserify]
         },
         files: {
           'build/bundle.js': 'js/**/*.js'
