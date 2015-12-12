@@ -31,10 +31,14 @@ function _setupListeners() {
   });
 
   Server._socket.on('join_conversation', function(data) {
+    console.log('conversation joined');
+    console.log(data);
     SOSEvents.emit('conversation_joined', data);
   });
 
   Server._socket.on('get_other_chat_ids', function(data) {
+    console.log('chats loaded');
+    console.log(data);
     SOSEvents.emit('conversations_loaded', data);
   });
 }
