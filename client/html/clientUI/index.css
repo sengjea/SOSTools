@@ -28,10 +28,10 @@ html,
 body {
   height: 100%;
   background: red; /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(yellow, red); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(yellow, red); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(yellow, red); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(yellow, red); /* Standard syntax */
+  background: -webkit-linear-gradient(#fad961, #f76b1c); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#fad961, #f76b1c); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#fad961, #f76b1c); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#fad961, #f76b1c); /* Standard syntax */
 }
 body {
   color: #fff;
