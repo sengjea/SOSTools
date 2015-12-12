@@ -15,7 +15,7 @@ SOSEvents.addListener('authenticated', function(token) {
 
 var ChatRep = require('./components/chat-rep.js');
 
-React.renderComponent(
+ReactDOM.render(
   <ChatRep />,
   document.getElementById('container_rep')
 );
