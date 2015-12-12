@@ -6,7 +6,8 @@ var SendMessageProcessor = require('./message_processor/SendMessageProcessor.js'
 
 
 MessageHandler.registerProcessors([
-  AuthMessageProcessor, SendMessageProcessor
+  AuthMessageProcessor, 
+  SendMessageProcessor
 ]);
 
 console.log('Starting the server');
@@ -15,7 +16,6 @@ io.on('connection', function (socket) {
 
   socket.on('message', function (type, data) { 
     console.log('message : ' + type + ' : ' + JSON.stringify(data));
-	debugger;
     var output = MessageHandler.handle(type, data);
     socket.emit('return_' + type, output);
   });
