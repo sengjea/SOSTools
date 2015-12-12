@@ -9,6 +9,24 @@ var Chats = React.createClass({
       chats: [
         {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
         {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
+        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
+        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
+        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
+        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
+        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
+        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
+        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
+        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
+        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
+        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
+        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
+        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
+        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
+        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
+        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
+        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
+        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
+        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
       ]
     };
   },
@@ -40,6 +58,7 @@ function getStyles() {
       fontSize: 14,
       color: '#000',
       height: window.innerHeight - 320,
+      overflow: 'scroll',
     },
     title: {
       marginBottom: 10,

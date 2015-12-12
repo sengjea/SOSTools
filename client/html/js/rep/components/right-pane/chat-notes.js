@@ -14,7 +14,7 @@ var ChatNotes = React.createClass({
         </div>
         <div className='form-group col-xs-8'>
           <label>Chat Notes</label>
-          <textarea className='form-control'></textarea>
+          <textarea className='form-control' style={{height: 70}}></textarea>
         </div>
       </div>
     );
