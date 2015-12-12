@@ -1,4 +1,4 @@
 *.swp
-client/html/build/*
-server/node_modules/*
-client/html/node_modules/*
+client/html/build
+server/node_modules
+client/html/node_modules
