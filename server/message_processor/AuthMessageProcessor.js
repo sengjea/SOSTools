@@ -13,6 +13,8 @@ var AuthMessageProcessor = new MessageProcessor();
  * specified, or in the case that the username
  * and password are wrong, the user is 
  * entered as a helpee.
+ *
+ * The returned object is of the form {token: "...."}
  */
 AuthMessageProcessor.register('get_token', function(data) {
 

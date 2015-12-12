@@ -25,7 +25,7 @@ module.exports = {
     } else {
 	  token = _genHelpeeAuthToken();
 
-	  data.chats.push({chatID: data.newChatID(),
+	  data.chats.push({chatId: data.newChatID(),
 		conversation: [], tokens: [token]});
 	}
 

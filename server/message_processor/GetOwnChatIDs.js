@@ -12,6 +12,9 @@ var SendMessageProcessor = new MessageProcessor();
  * members of.
  *
  * For helpees, this is only the chat that they are a part of.
+ *
+ * The object returned will be of the form
+ * { chats: [....]} with all the chatIDs displayed
  */
 SendMessageProcessor.register('get_own_chat_ids', function(params) {
 	function contains(a, obj) {
@@ -28,7 +31,7 @@ SendMessageProcessor.register('get_own_chat_ids', function(params) {
 		return (contains(elem.subscribers, token));
 	});
 
-	return active_chats;
+	return {chats: active_chats};
 });
 
 module.exports = SendMessageProcessor;
