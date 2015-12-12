@@ -15,9 +15,11 @@ var MessageHandler = {
         'Unhandled message: ' + type + ' with data: ' + JSON.stringify(data));
       return;
     } 
+    var output = [];
     processors[type].forEach(function(callback) {
-      callback(type, data);
+      output.push(callback(type, data));
     });
+    return output;
   },
   
   registerProcessors: function(listOfProcessors) {
