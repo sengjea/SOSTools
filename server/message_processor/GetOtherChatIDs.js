@@ -18,7 +18,7 @@ var AllChatsProcessor = new MessageProcessor();
  * The returned object is of the form 
  * {chats: ["id1", "id2", ....]}
  */
-AllChatsProcessor.register('get_other_chat_ids', function(params) {
+AllChatsProcessor.register('get_other_chat_ids', function(params, socket) {
 	var token = params['token'];
 	var all = params['all'];
 

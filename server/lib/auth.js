@@ -17,7 +17,7 @@ function _genHelpeeAuthToken() {
 }
 
 module.exports = {
-  genAuthToken: function(username, password) {
+  genAuthToken: function(username, password, socket) {
     var token;
 	var isRep = users[username] && users[username] === password;
     if (isRep) {
@@ -29,7 +29,7 @@ module.exports = {
 		conversation: [], tokens: [token]});
 	}
 
-	data.tokens.push({isRep: isRep, token: token});
+	data.tokens.push({isRep: isRep, token: token, socket: socket});
 
     return token;
   }

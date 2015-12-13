@@ -16,7 +16,7 @@ var SendMessageProcessor = new MessageProcessor();
  * The object returned will be of the form
  * { chats: [....]} with all the chatIDs displayed
  */
-SendMessageProcessor.register('get_own_chat_ids', function(params) {
+SendMessageProcessor.register('get_own_chat_ids', function(params, socket) {
 	function contains(a, obj) {
 		for (var i = 0; i < a.length; i++) {
 			if (a[i] === obj) {

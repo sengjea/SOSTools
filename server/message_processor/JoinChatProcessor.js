@@ -2,7 +2,7 @@ var MessageProcessor = require('./MessageProcessor.js');
 var auth = require('../lib/auth.js');
 var data = require('../lib/Data.js');
 
-var CreateChatProcessor = new MessageProcessor();
+var JoinChatProcessor = new MessageProcessor();
 
 /*
  * Takes a chat ID ('chatID') and a token('token') 
@@ -20,7 +20,7 @@ var CreateChatProcessor = new MessageProcessor();
  *
  * {'created': true}
  */
-CreateChatProcessor.register('join_conversation', function(params) { 
+JoinChatProcessor.register('join_conversation', function(params, socket) { 
 	var chatID = params['chatID'];
 	var repToken = params['token'];
 
@@ -43,4 +43,4 @@ CreateChatProcessor.register('join_conversation', function(params) {
 	return {created: chatFound};
 });
 
-module.exports = CreateChatProcessor;
+module.exports = JoinChatProcessor;

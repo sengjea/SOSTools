@@ -9,7 +9,7 @@ function _registerProcessor(type, callback) {
 }
 
 var MessageHandler = {
-  handle: function(type, data) {
+  handle: function(type, data, socket) {
     if (!processors[type]) {
       console.log(
         'Unhandled message: ' + type + ' with data: ' + JSON.stringify(data));
@@ -17,7 +17,7 @@ var MessageHandler = {
     } 
     var output = [];
     processors[type].forEach(function(callback) {
-      output.push(callback(data));
+      output.push(callback(data, socket));
     });
     return output;
   },

@@ -16,11 +16,35 @@ var AuthMessageProcessor = new MessageProcessor();
  *
  * The returned object is of the form {token: "...."}
  */
-AuthMessageProcessor.register('get_token', function(data) {
-
-  var authToken = auth.genAuthToken(data.name, data.password);
+AuthMessageProcessor.register('get_token', function(data, socket) {
+  var authToken = auth.genAuthToken(data.name, data.password, socket);
 
   return {token: authToken};
+}); 
+
+/*
+ * In this case, the user already has a token.
+ *
+ * Update the socket for that token.
+ *
+ * The token should be attached under ('token').
+ *
+ * It sends back a (potentiatlly new!) token. This is in the case
+ * that the passed token could not be found.
+ */
+AuthMessageProcessor.register('send_token', function(data, socket) {
+	var token = data['token'];
+
+	var updateSuccessful = data.updateSocket(token, socket);
+
+	if (!updateSuccessful) {
+		// The token wasn't found. Create a new one 
+		// for a helpee.
+		token = auth.genAuthToken(undefined, undefined, socket);
+	}
+
+	return {token: token};
 });
+
 
 module.exports = AuthMessageProcessor; 
