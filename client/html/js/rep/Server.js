@@ -5,7 +5,7 @@ var SOSEvents = require('./SOSEvents.js');
 function _setupListeners() {
 
   Server._socket.on('connect', function(){
-    SOSEvents.emit('connected');
+    SOSEvents.emit('socket_connected');
     Server.authenticate();
   });
 
@@ -14,7 +14,12 @@ function _setupListeners() {
   });
 
   Server._socket.on('disconnect', function(){
-    SOSEvents.emit('disconnected');
+    SOSEvents.emit('socket_disconnected');
+  });
+
+  Server._socket.on('error', function() {
+    console.log('error');
+    SOSEvents.emit('socket_error');
   });
 
   function _onToken(data) { 
@@ -30,7 +35,7 @@ function _setupListeners() {
     _onToken(data);
   });
 
-  Server._socket.on('set_token', function(data) {
+  Server._socket.on('send_token', function(data) {
     _onToken(data);
   });
 
@@ -72,7 +77,7 @@ var Server = {
       
       // Make sure the server knows we're know who we are
       Server._socket.send(
-        'set_token',
+        'send_token',
         { token: Server._token }
       );
       return;

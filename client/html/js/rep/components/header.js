@@ -6,7 +6,7 @@ var s = getStyles();
 
 var Header = React.createClass({
   propTypes: {
-    connected : React.PropTypes.STRING
+    connected : React.PropTypes.string
   },
   getInitialState: function() {
     return {
@@ -14,11 +14,11 @@ var Header = React.createClass({
     };
   },
   render: function() {
-    SOSEvents.addListener('connected', function() {
+    SOSEvents.addListener('socket_connected', function() {
       this.setState({ connected: true });
     }.bind(this)); 
 
-    SOSEvents.addListener('disconnect', function() {
+    SOSEvents.addListener('socket_error', function() {
       this.setState({ connected: false });
     }.bind(this)); 
 
