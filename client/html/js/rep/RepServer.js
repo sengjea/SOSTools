@@ -11,41 +11,6 @@ RepServer.getInstance = function() {
 
 // TODO: Add validation to each of these, emit error cases
 RepServer.prototype.setupListeners = function() {
-  this._socket.on('connect', function() {
-    SOSEvents.emit('socket_connected');
-    this.authenticate();
-  }.bind(this));
-
-  this._socket.on('message', function(data){
-    SOSEvents.emit('message', data);
-  });
-
-  this._socket.on('disconnect', function(){
-    SOSEvents.emit('socket_disconnected');
-  });
-
-  this._socket.on('error', function() {
-    console.log('error');
-    SOSEvents.emit('socket_error');
-  });
-
-  function _onToken(data) { 
-    console.log('get_token received');
-    console.log(data);
-    var token =  data[0].token;
-    this._token = token;
-    global.localStorage.setItem('authToken', token);
-    SOSEvents.emit('authenticated', token);
-  }
-
-  this._socket.on('get_token', function(data) {
-    _onToken(data);
-  });
-
-  this._socket.on('send_token', function(data) {
-    _onToken(data);
-  });
-
   this._socket.on('get_own_chat_ids', function(data) {
     SOSEvents.emit('owned_chats_loaded', data);
   });
@@ -68,7 +33,7 @@ RepServer.prototype.setupListeners = function() {
 };
 
 RepServer.prototype.getOwnConversations = function() {
-  this._socket.send('get_own_chat_ids', { token: Server._token }); 
+  this._socket.send('get_own_chat_ids', { token: this._token }); 
 };
 
 RepServer.prototype.joinConversation = function(chatID) {
@@ -76,7 +41,7 @@ RepServer.prototype.joinConversation = function(chatID) {
     'join_conversation', 
     {
       chatID: chatID, 
-      token: Server._token
+      token: this._token
     }
   );
 };
@@ -85,7 +50,7 @@ RepServer.prototype.loadConversations = function(loadOnlyEmpty) {
   this._socket.send(
     'get_other_chat_ids',
     { 
-      token : Server._token,
+      token : this._token,
       all : !loadOnlyEmpty
     }
   );
