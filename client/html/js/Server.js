@@ -15,6 +15,10 @@ Server.prototype.getCredentials = function() {
   return this._credentials;
 }
 
+Server.prototype.getToken = function() {
+  return this._token;
+}
+
 Server.prototype.setCredentials = function(username, password) {
   this._credentials = {
     username: username,
