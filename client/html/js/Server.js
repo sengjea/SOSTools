@@ -4,6 +4,7 @@ function Server() {
   this._socket = null;
   this._token = null;
   this._instance = null;
+  this._localStorageKey = null;
 }
 
 Server.prototype.setupCoreListeners = function() {
@@ -30,7 +31,7 @@ Server.prototype.setupCoreListeners = function() {
     console.log(data);
     var token =  data[0].token;
     this._token = token;
-    global.localStorage.setItem('authToken', token);
+    global.localStorage.setItem(this._localStorageKey, token);
     SOSEvents.emit('authenticated', token);
   }
 
@@ -59,10 +60,11 @@ Server.prototype.connect = function() {
 }
 
 Server.prototype.authenticate = function(username, password) {
-  if (window.localStorage.authToken) {
+  var localToken = window.localStorage.getItem(this._localStorageKey);
+  if (localToken) {
     console.log('Using locally stored auth token');
-    SOSEvents.emit('authenticated', window.localStorage.authToken);
-    this._token = window.localStorage.authToken;
+    SOSEvents.emit('authenticated', localToken);
+    this._token = localToken;
     
     // Make sure the server knows we're know who we are
     this._socket.send(

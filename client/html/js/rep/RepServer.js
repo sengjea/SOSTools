@@ -1,7 +1,10 @@
 var SOSEvents = require('../SOSEvents.js');
 var Server = require('../Server.js');
 
-var RepServer = function() {};
+var RepServer = function() {
+  this._localStorageKey = 'repAuthToken';
+};
+
 RepServer.prototype = new Server();
 RepServer._instance = new RepServer();
 

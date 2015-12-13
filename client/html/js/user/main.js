@@ -10,3 +10,4 @@ ReactDOM.render(
 );
 
 UserServer.getInstance().connect();
+global.server = UserServer.getInstance();
