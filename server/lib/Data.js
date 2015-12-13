@@ -26,8 +26,8 @@ function _isRep(token) {
  */
 function _updateSocket(token, socket) {
 	for (i = 0; i < _tokens.length; i ++) {
-		if (_tokens.token === token) {
-			_tokens.socket = socket;
+		if (_tokens[i].token === token) {
+			_tokens[i].socket = socket;
 			return true;
 		}
 	}
