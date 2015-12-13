@@ -1,9 +1,7 @@
 var SOSEvents = require('../SOSEvents.js');
 var Server = require('../Server.js');
 
-var RepServer = function() {
-  this._localStorageKey = 'repAuthToken';
-};
+var RepServer = function() {};
 
 RepServer.prototype = new Server();
 RepServer._instance = new RepServer();
@@ -11,6 +9,10 @@ RepServer._instance = new RepServer();
 RepServer.getInstance = function() {
   return RepServer._instance;
 }
+
+RepServer.prototype.getLocalStorageKey = function() {
+  return 'repAuthToken';
+};
 
 // TODO: Add validation to each of these, emit error cases
 RepServer.prototype.setupListeners = function() {
