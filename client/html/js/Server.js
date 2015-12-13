@@ -4,7 +4,7 @@ function Server() {
   this._socket = null;
   this._token = null;
   this._instance = null;
-  this._credentials = null;
+  this._credentials = { username: null, password: null };
 }
 
 Server.prototype.getLocalStorageKey = function() {
