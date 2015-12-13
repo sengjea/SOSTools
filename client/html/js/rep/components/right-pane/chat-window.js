@@ -17,6 +17,9 @@ var ChatWindow = React.createClass({
       chatId: '',
     };
   },
+  componentDidUpdate() {
+    // this.refs.chatWindow.scrollTop = this.refs.chatWindow.scrollHeight + 'px';
+  },
   componentDidMount() {
     SOSEvents.addListener('receive_message', function(data) {
       if (data) {
@@ -81,11 +84,11 @@ var ChatWindow = React.createClass({
 
     return (
       <div>
-        <div style={s.container}>
+        <div style={s.container} >
           <div style={s.header}>
             Someone is asking for help. Chat Started at {startDate.toString()}
           </div>
-          <div style={messagesStyle}>
+          <div style={messagesStyle} ref="chatWindow">
             {this.renderMessages()}
           </div>
           <div style={s.newMessage}>

@@ -48,15 +48,15 @@ var ChatWindow = React.createClass({
   componentDidUpdate: function() {
     this.refs.chatWindow.scrollTop = 
       this.refs.chatWindow.scrollHeight + 'px';
-    window.cw = this.refs.chatWindow;
+    window.scrollTo(0, this.refs.chatWindow.scrollHeight);
   },
 
   renderMessages() {
     var token = UserServer.getInstance().getToken();
     return this.state.messagesList.map(function(message, index) {
-      var is_your_own_message = message.token === token;
+      var is_your_own_message = message.sender_token === token;
       return (
-        <div style={is_your_own_message ? s.receivedMessage : s.sentMessage} key={index}>
+        <div style={!is_your_own_message ? s.receivedMessage : s.sentMessage} key={index}>
           <div style={s.sender}>
             {message.received ? this.props.repName : 'You:'}
             <div style={s.time}>{message.time}</div>
