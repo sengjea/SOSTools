@@ -14,15 +14,16 @@ var ChatWindow = React.createClass({
       isNoteOpen: false,
       messagesList: [],
       currentMessage: '',
+      chatId: '',
     };
   },
   componentDidMount() {
-    SOSEvents.addListener('message_received', function(data) {
-
+    SOSEvents.addListener('receive_message', function(data) {
+      console.log(data);
     });
 
     SOSEvents.addListener('conversation_loaded', function(data) {
-      this.setState({messagesList: data[0].messages});
+      this.setState({messagesList: data[0].messages, chatId: data[0].chatID});
     }.bind(this));
   },
   toggleNotes() {
@@ -42,9 +43,9 @@ var ChatWindow = React.createClass({
       );
     });
   },
-  handelKeyPressed(e) {
+  handleKeyPressed(e) {
     if (e.key === 'Enter' && this.state.currentMessage !== '') {
-      RepServer.getInstance().sendMessage(this.state.currentMessage);
+      RepServer.getInstance().sendMessage(this.state.chatId, this.state.currentMessage);
       this.setState({currentMessage: ''});
     }
   },
@@ -78,7 +79,7 @@ var ChatWindow = React.createClass({
             <div className='form-group col-xs-10'>
               <input type='text' className='form-control' style={{padding: 25}}
                 placeholder='Start Helping here. press ENTER to send.'
-                onKeyPress={this.handelKeyPressed}
+                onKeyPress={this.handleKeyPressed}
                 onChange={this.handleChange}
                 value={this.state.currentMessage}/>
             </div>

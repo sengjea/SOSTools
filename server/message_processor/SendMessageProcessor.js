@@ -10,13 +10,13 @@ var SendMessageProcessor = new MessageProcessor();
  * A Sender Auth token ('sender_token')
  * a timestamp ('time')
  *
- * It will broadcast the message to all the 
+ * It will broadcast the message to all the
  * other sockets in the chat.
  */
 SendMessageProcessor.register('send_message', function(params, socket) {
 	var senderToken = params['sender_token'];
 	var chatID = params['chatID'];
-	
+
 	var braodcasts = data.getTokensFromChat(chatID);
 
 	// Finally, add the message to the chat history

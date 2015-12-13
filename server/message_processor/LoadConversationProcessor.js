@@ -8,7 +8,7 @@ var LoadConversationProcessor = new MessageProcessor();
  * This takes a chatID (under 'chatID') and
  * a token (under 'token').
  *
- * If the user is authorized to view the 
+ * If the user is authorized to view the
  * chat, we return the chat. In the case
  * the user is not authorized, or the chat
  * does not exist, we return an error message
@@ -25,7 +25,7 @@ LoadConversationProcessor.register('load_conversation', function(params, socket)
 	var chatID = params['chatID'];
 
 	if (!data.chatExists(chatID)) {
-		return {messages: [], 'status': 
+		return {messages: [], 'status':
 			"Chat " + chatID + " does not exist"}
 	}
 
@@ -36,19 +36,19 @@ LoadConversationProcessor.register('load_conversation', function(params, socket)
 			}
 		}
 		return false;
-	} 
+	}
 
 	var chat = data.getChat(chatID);
   console.log(chat);
 	if (data.isRep(token)) {
-		// In this case, they are always 
+		// In this case, they are always
 		// cleared to see the chat
-		return {messages: chat.conversation, 'status':'OK'}
+		return {messages: chat.conversation, chatID: chatID, 'status':'OK'}
 	} else {
 		if (contains(chat.tokens, token)) {
 			// We're OK
-			return {messages: chat.conversation, 'status': 'OK'}
-		}	
+			return {messages: chat.conversation, chatID: chatID, 'status': 'OK'}
+		}
 	}
 
 	return {messages: [], 'status': "Not cleared to view this conversation"}

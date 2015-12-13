@@ -71,6 +71,10 @@ Server.prototype.setupCoreListeners = function() {
     SOSEvents.emit('own_chats_loaded', data);
   });
 
+  this._socket.on('receive_message', function(data) {
+    SOSEvents.emit('receive_message', data);
+  });
+
   this._socket.on(
     'load_conversation',
     function(data) {
@@ -134,7 +138,7 @@ Server.prototype.loadMessages = function(chatID) {
   );
 }
 
-Server.prototype.sendMessage = function(conversationID, messageBody) {
+Server.prototype.sendMessage = function(chatID, messageBody) {
   this._socket.send(
     'send_message',
     {
