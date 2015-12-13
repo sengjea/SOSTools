@@ -14,13 +14,12 @@ var Chats = React.createClass({
   },
   componentDidMount() {
     SOSEvents.addListener('own_chats_loaded', function(data) {
-      console.log(data);
+      console.log('toto1', data);
       console.log(data[0].chats);
       this.setState({chats: data[0].chats});
     }.bind(this));
 
     SOSEvents.addListener('conversation_joined', function(data) {
-      console.log(data);
       if (data[0]) {
         var currentChats = this.state.chats;
         currentChats.push(data[0]);

@@ -19,6 +19,7 @@ var ChatRep = React.createClass({
   componentDidMount() {
     SOSEvents.addListener('authenticated', function(token) {
       SOSEvents.addListener('own_chats_loaded', function(data) {
+        console.log(data);
         this.setState({isLoading: false});
       }.bind(this));
       RepServer.getInstance().getOwnConversations();

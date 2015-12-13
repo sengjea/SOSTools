@@ -104,7 +104,7 @@ Server.prototype.authenticate = function() {
   if (localToken) {
     console.log('Using locally stored auth token');
     this._token = localToken;
-
+    SOSEvents.emit('authenticated', localToken);
     // Make sure the server knows we're know who we are
     this._socket.send(
       'send_token',
