@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 var React = require('react');
-var SOSEvents = require('../SOSEvents.js');
+var SOSEvents = require('../../SOSEvents.js');
 
 var s = getStyles();
 
@@ -10,19 +10,19 @@ var Header = React.createClass({
   },
   getInitialState: function() {
     return {
-      connected: this.props.connected 
+      connected: this.props.connected
     };
   },
   render: function() {
     SOSEvents.addListener('socket_connected', function() {
       this.setState({ connected: true });
-    }.bind(this)); 
+    }.bind(this));
 
     SOSEvents.addListener('socket_error', function() {
       this.setState({ connected: false });
-    }.bind(this)); 
+    }.bind(this));
 
-    var connectedState = 
+    var connectedState =
       this.state.connected ? "online" : "offline";
     return (
       <div className='container-fluid' style={s.container}>
