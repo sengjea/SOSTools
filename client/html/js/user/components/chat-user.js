@@ -35,12 +35,14 @@ var ChatUser = React.createClass({
   },
   render: function() {
     var chatWindow;
+    var newMessage;
     if (this.state.chatID) {
       chatWindow = 
         <ChatWindow 
           repName={this.state.repName}
           chatID={this.state.chatID}
         />;
+      newMessage = <NewMessage chatID={this.state.chatID} />;
     }
     return (
       <div>
@@ -48,7 +50,7 @@ var ChatUser = React.createClass({
         <div>
           <Header repName={this.state.repName}/>
           {chatWindow}
-          <NewMessage />
+          {newMessage}
         </div>
         }
       </div>

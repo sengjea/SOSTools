@@ -14,6 +14,7 @@ var SendMessageProcessor = new MessageProcessor();
  * other sockets in the chat.
  */
 SendMessageProcessor.register('send_message', function(params, socket) {
+  console.log(params);
 	var senderToken = params['sender_token'];
 	var chatID = params['chatID'];
 	var message = params['message'];

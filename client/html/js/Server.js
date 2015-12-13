@@ -7,6 +7,11 @@ function Server() {
   this._credentials = { username: null, password: null };
 }
 
+Server.prototype.isConnected = function() {
+  console.log(this._socket);
+  return this._socket.connected;
+}
+
 Server.prototype.getLocalStorageKey = function() {
   throw new Error('getLocalStorageKey must be implemented by a subclass');
 }

@@ -16,9 +16,9 @@ function _isRep(token) {
 }
 
 function _addToHistory(chatID, params) {
-	for (var ii = 0; ii < _inactive_chats.length; ii ++) {
-		if(_inactive_chats[i].chatID === chatID) {
-			_inactive_chats[i].conversation.push(params);
+	for (var ii = 0; ii < _inactive_chats.length; ii++) {
+		if(_inactive_chats[ii].chatID === chatID) {
+			_inactive_chats[ii].conversation.push(params);
 			return;
 		}
 	}

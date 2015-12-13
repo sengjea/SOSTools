@@ -1,17 +1,41 @@
 /** @jsx React.DOM */
 var React = require('react');
+var UserServer = require('../UserServer.js');
 var s = getStyles();
 
 var NewMessage = React.createClass({
-  propTypes: {},
+  propTypes: {
+    chatID: React.PropTypes.string
+  },
+
+  sendMessage: function() {
+    console.log('Sending your message...');
+    var message = this.refs.messageContent.value;
+    UserServer.getInstance().sendMessage(
+      this.props.chatID,
+      message
+    ); 
+    this.refs.messageContent.value = null;
+  },
+
   render: function() {
     return (
       <div style={s.container}>
         <div className='form-group col-xs-10' style={{padding: 0}}>
-          <input type='text' className='form-control' style={s.input}
-            placeholder='Tell me what’s on your mind'/>
+          <input 
+            type='text' 
+            className='form-control' 
+            style={s.input}
+            placeholder='Tell me what’s on your mind'
+            ref="messageContent"
+          />
         </div>
-        <div className='col-xs-2' style={s.sendButton}>send</div>
+        <div 
+          className='col-xs-2' 
+          onClick={this.sendMessage}
+          style={s.sendButton}>
+          send
+        </div>
       </div>
     );
   }

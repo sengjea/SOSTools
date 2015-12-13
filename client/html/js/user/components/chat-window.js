@@ -34,7 +34,22 @@ var ChatWindow = React.createClass({
       }.bind(this)
     );
 
+    SOSEvents.addListener(
+      'receive_message',
+      function(data) {
+        var list = this.state.messagesList;
+        console.log(data.message);
+        list.push(data);
+        this.setState({ messagesList : list });
+      }.bind(this)
+    );
   },  
+
+  componentDidUpdate: function() {
+    this.refs.chatWindow.scrollTop = 
+      this.refs.chatWindow.scrollHeight + 'px';
+    window.cw = this.refs.chatWindow;
+  },
 
   renderMessages() {
     var token = UserServer.getInstance().getToken();
@@ -50,13 +65,14 @@ var ChatWindow = React.createClass({
         </div>
       );
     }.bind(this));
+
   },
   render: function() {
     if (this.props.chatID) {
       UserServer.getInstance().loadMessages(this.props.chatID);
     }
     return (
-      <div style={s.container}>
+      <div style={s.container} ref="chatWindow">
         {this.renderMessages()}
       </div>
     );
