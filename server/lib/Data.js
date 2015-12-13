@@ -35,6 +35,24 @@ function _updateSocket(token, socket) {
 	return false;
 }
 
+// returns the chat if it exists
+// if it does not exist, we send back undefined.
+function _getChat(chatID) {
+	for (i = 0; i < _inactive_chats.length; i ++) {
+		if (_inactive_chats[i].chatID === chatID) {
+			return _inactive_chats[i];
+		}
+	}
+
+	return undefined;
+}
+
+// Returns true if the chat exists
+// False otherwise
+function _chatExists(chatID) {
+	return _getTokensFrom(chatID);
+}
+
 // returns the tokens associated with a given chat ID.
 // Will return the empty list if no such chat exists.
 function _getTokensFrom(chatID) {
@@ -51,6 +69,7 @@ function _getTokensFrom(chatID) {
 
 var _tokens = []; // {boolean: isRep, string: token, socket: socket}
 
+// This is treated as all chats right now
 var _inactive_chats = []; // {chatID, message[]: conversation, token[]: tokens}[]
 
 // TODO -- implement this this thing. 
@@ -60,7 +79,7 @@ var _inactive_chats = []; // {chatID, message[]: conversation, token[]: tokens}[
 // 
 // On a helpee disconnect, the helpee chat should be
 // moved to inactive
-var _active_chats = [] // same orientation as chats. 
+// var _active_chats = [] // same orientation as chats. 
 // Stuff is copied back and forth as the helpee moves in and
 // out of enabled
 
@@ -73,5 +92,6 @@ module.exports = {
 	newChatID: _newChatID,
 	isRep: _isRep,
 	getTokensFromChat: _getTokensFrom,
-	updateSocket: _updateSocket
+	chatExists: _chatExists,
+	updateSocket: _updateSocket,
 }
