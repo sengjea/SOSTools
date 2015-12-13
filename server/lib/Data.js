@@ -15,6 +15,15 @@ function _isRep(token) {
 	return authData && authData.isRep;
 }
 
+function _addToHistory(chatID, params) {
+	for (var ii = 0; ii < _inactive_chats.length; ii ++) {
+		if(_inactive_chats[i].chatID === chatID) {
+			inactive_chats[i].conversation.push(params);
+			return;
+		}
+	}
+}
+
 /*
  * Returns true if a suitable token
  * was found.
@@ -91,5 +100,6 @@ module.exports = {
 	getTokensFromChat: _getTokensFrom,
 	chatExists: _chatExists,
 	updateSocket: _updateSocket,
-  getChat: _getChat
+    getChat: _getChat,
+    addToHistory: _addToHistory
 };
