@@ -23,24 +23,19 @@ var JoinChatProcessor = new MessageProcessor();
 JoinChatProcessor.register('join_conversation', function(params, socket) { 
 	var chatID = params['chatID'];
 	var repToken = params['token'];
-
-	var chatFound = false;
-
+	var chat = null;
 	if (!data.isRep(repToken)) {
 		return {'created': false};
 	}
-
 	for (i = 0; i < data.chats.length; i ++) {
 		if (data.chats[i].chatID === chatID) {
-			chatFound = true;
-
-			data.chats[i].tokens.push(repToken);
-
+			chat = data.chats[i];
+			chat.tokens.push(repToken);
 			break;
 		}
 	}
 
-	return {created: chatFound};
+	return chat;
 });
 
 module.exports = JoinChatProcessor;
