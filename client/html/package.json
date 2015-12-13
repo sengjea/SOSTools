@@ -4,25 +4,26 @@
   "description": "An open-source client for helping people in need of support",
   "main": "src/main.js",
   "dependencies": {
-    "react": "~0.8",
-    "statics-stylesheets": "~0.0.1",
-    "stylesheets": "~0.0.3",
-    "envify": "~1.2.1",
-    "grunt": "~0.4.4",
-    "browserify": "~3.33.0",
-    "grunt-browserify": "~1.3.2",
-    "grunt-contrib-watch": "~0.6.1",
-    "reactify": "~0.10.0",
-    "grunt-env": "~0.4.1"
+    "envify": ">=1.2.1",
+    "grunt": ">=0.4.4",
+    "grunt-browserify": ">=1.3.2",
+    "grunt-contrib-watch": ">=0.6.1",
+    "grunt-env": ">=0.4.1",
+    "react": ">=0.8",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "jsxc": "~0.1.6"
+    "jsxc": ">=0.1.6"
   },
   "scripts": {
     "start": "jsxc --watch js/ build/",
     "build": "jsxc js/ build/"
   },
-  "files": ["lib/", "USAGE.txt", "static/"],
+  "files": [
+    "lib/",
+    "USAGE.txt",
+    "static/"
+  ],
   "staticRoot": "./static/",
   "staticPlugin": "statics-stylesheets",
   "author": "Jackson Gabbard",

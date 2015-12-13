@@ -17,7 +17,8 @@ module.exports = function(grunt) {
           transform: [require('grunt-react').browserify]
         },
         files: {
-          'build/bundle.js': 'js/**/*.js'
+          'build/rep_bundle.js': 'js/rep/*.js',
+          'build/user_bundle.js' : 'js/user/*.js'
         }
       },
       build: {
@@ -26,7 +27,8 @@ module.exports = function(grunt) {
           transform: [require('grunt-react').browserify]
         },
         files: {
-          'build/bundle.js': 'js/**/*.js'
+          'build/rep_bundle.js': 'js/rep/*.js',
+          'build/user_bundle.js' : 'js/user/*.js'
         }
       }
     },

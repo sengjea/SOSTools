@@ -27,7 +27,6 @@ function getStyles() {
       background: '#d8d8d8',
       padding: '10px 8px',
       color: '#000',
-      height: 100,
     },
     helplineName: {
       fontSize: 40,
