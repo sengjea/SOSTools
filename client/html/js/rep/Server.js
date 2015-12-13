@@ -121,7 +121,7 @@ var Server = {
       {
         chatID : chatID,
         message: messageBody,
-        senderToken: Server._token
+        sender_token: Server._token
       }
     );
   }
