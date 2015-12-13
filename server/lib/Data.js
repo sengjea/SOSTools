@@ -62,7 +62,7 @@ function _chatExists(chatID) {
 // returns the tokens associated with a given chat ID.
 // Will return the empty list if no such chat exists.
 function _getTokensFrom(chatID) {
-	var chat = getChat(chatID);
+	var chat = _getChat(chatID);
 
 	if (chat === undefined) {
 		return []; 
