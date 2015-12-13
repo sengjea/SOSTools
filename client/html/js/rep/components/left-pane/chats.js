@@ -14,10 +14,13 @@ var Chats = React.createClass({
   },
   componentDidMount() {
     SOSEvents.addListener('own_chats_loaded', function(data) {
+      console.log(data);
+      console.log(data[0].chats);
       this.setState({chats: data[0].chats});
     }.bind(this));
 
     SOSEvents.addListener('conversation_joined', function(data) {
+      console.log(data);
       if (data[0]) {
         var currentChats = this.state.chats;
         currentChats.push(data[0]);
@@ -29,30 +32,34 @@ var Chats = React.createClass({
     RepServer.getInstance().loadMessages(chatID);
   },
   renderChats() {
-    return this.state.chats.map(function(chat, index) {
-      if (!chat.nbUnread) {
-        chat.nbUnread = 0;
-      }
+    if (this.state.chats.length === 0) {
+      return (<div style={{padding: 30}}>You don't have active chats</div>)
+    } else {
+      return this.state.chats.map(function(chat, index) {
+        if (!chat.nbUnread) {
+          chat.nbUnread = 0;
+        }
 
-      if (!chat.colour) {
-        chat.colour = 'red';
-      }
+        if (!chat.colour) {
+          chat.colour = 'red';
+        }
 
-      return (
-        <div
-          style={{
-            borderLeft: '10px solid ' + chat.colour,
-            padding: 10, cursor: 'pointer',
-            borderBottom: '1px solid white',
-            }}
-          key={index}
-          onClick={this.loadChat.bind(null, chat.chatID)}
-        >
-          {chat.conversation[chat.conversation.length - 1].message.substr(0, 25)}...
-          {chat.nbUnread !== 0 ? <div style={s.badge}>{chat.nbUnread}</div> : null}
-        </div>
-      );
-    }.bind(this));
+        return (
+          <div
+            style={{
+              borderLeft: '10px solid ' + chat.colour,
+              padding: 10, cursor: 'pointer',
+              borderBottom: '1px solid white',
+              }}
+            key={index}
+            onClick={this.loadChat.bind(null, chat.chatID)}
+          >
+            {chat.conversation[chat.conversation.length - 1].message.substr(0, 25)}...
+            {chat.nbUnread !== 0 ? <div style={s.badge}>{chat.nbUnread}</div> : null}
+          </div>
+        );
+      }.bind(this));
+    }
   },
   render: function() {
     return (
@@ -78,6 +85,7 @@ function getStyles() {
     title: {
       fontSize: 20,
       padding: 10,
+      paddingLeft: 25,
       borderBottom: '1px solid #fff',
     },
     badge: {

@@ -19,8 +19,12 @@ var ChatWindow = React.createClass({
   },
   componentDidMount() {
     SOSEvents.addListener('receive_message', function(data) {
-      console.log(data);
-    });
+      if (data) {
+        var currentMessagesList = this.state.messagesList;
+        currentMessagesList.push(data);
+        this.setState({messagesList: currentMessagesList});
+      }
+    }.bind(this));
 
     SOSEvents.addListener('conversation_loaded', function(data) {
       this.setState({messagesList: data[0].messages, chatId: data[0].chatID});
@@ -45,7 +49,7 @@ var ChatWindow = React.createClass({
   },
   handleKeyPressed(e) {
     if (e.key === 'Enter' && this.state.currentMessage !== '') {
-      RepServer.getInstance().sendMessage(this.state.chatId, this.state.currentMessage);
+      RepServer.getInstance().sendMessage(this.state.chatId, e.target.value);
       this.setState({currentMessage: ''});
     }
   },
@@ -61,7 +65,16 @@ var ChatWindow = React.createClass({
     }
 
     if (this.state.messagesList.length === 0) {
-      return (null);
+      return (
+        <div>
+          <div style={s.containerEmpty}>
+            <h1>Welcome Julie!</h1>
+            <p>You have no active chats right now. <br/>
+            Click the "Add a new chat" button
+            to start helping</p>
+          </div>
+        </div>
+      );
     }
 
     var startDate = new Date(this.state.messagesList[0].time);
@@ -101,6 +114,11 @@ function getStyles() {
   return {
     container: {
       paddingTop: 20,
+    },
+    containerEmpty: {
+      textAlign: 'center',
+      width: '100%',
+      marginTop: '30%',
     },
     header: {
       width: '80%',

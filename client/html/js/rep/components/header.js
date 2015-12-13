@@ -51,8 +51,10 @@ function getStyles() {
     },
     helplineName: {
       fontSize: 40,
+      paddingTop: 10,
     },
     userDetails: {
+      paddingTop: 10,
       float: 'right',
       fontSize: 20,
     },
@@ -63,6 +65,7 @@ function getStyles() {
     logoutButton: {
       display: 'block',
       color: '#fff',
+      fontSize: 15,
     },
     userImage: {
       borderRadius: 40,

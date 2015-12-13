@@ -31,6 +31,7 @@ function getStyles() {
       background: '#528ab3',
       width: '100%',
       padding: 10,
+      paddingLeft: 25,
       borderTop: '1px solid #fff',
       fontSize: 20,
       color: '#fff',

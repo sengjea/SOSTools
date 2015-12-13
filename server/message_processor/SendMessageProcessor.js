@@ -16,8 +16,11 @@ var SendMessageProcessor = new MessageProcessor();
 SendMessageProcessor.register('send_message', function(params, socket) {
 	var senderToken = params['sender_token'];
 	var chatID = params['chatID'];
+	var message = params['message'];
 
-	var braodcasts = data.getTokensFromChat(chatID);
+	params['time'] = new Date();
+
+	var broadcasts = data.getTokensFromChat(chatID);
 
 	// Finally, add the message to the chat history
 	data.addToHistory(chatID, params);

@@ -34,7 +34,7 @@ var MoreChatsToggle = React.createClass({
   render: function() {
     return (
       <div style={s.container}>
-        <button className='btn' onClick={this.addNewChat}>Add a new chat</button>
+        <button className='btn' onClick={this.addNewChat} style={s.btn}>Add a new chat</button>
       </div>
     );
   }
@@ -47,6 +47,10 @@ function getStyles(){
       width: '100%',
       padding: 10,
       height: 60,
+    },
+    btn: {
+      width: '100%',
+      marginTop: 4, 
     }
   };
 }
