@@ -4,7 +4,10 @@ function Server() {
   this._socket = null;
   this._token = null;
   this._instance = null;
-  this._localStorageKey = null;
+}
+
+Server.prototype.getLocalStorageKey = function() {
+  throw new Error('getLocalStorageKey must be implemented by a subclass');
 }
 
 Server.prototype.setupCoreListeners = function() {
@@ -26,14 +29,14 @@ Server.prototype.setupCoreListeners = function() {
     SOSEvents.emit('socket_error');
   });
 
-  function _onToken(data) { 
+  var _onToken = function(data) { 
     console.log('get_token received');
     console.log(data);
     var token =  data[0].token;
     this._token = token;
-    global.localStorage.setItem(this._localStorageKey, token);
+    global.localStorage.setItem(this.getLocalStorageKey(), token);
     SOSEvents.emit('authenticated', token);
-  }
+  }.bind(this);
 
   this._socket.on('get_token', function(data) {
     _onToken(data);
@@ -60,7 +63,7 @@ Server.prototype.connect = function() {
 }
 
 Server.prototype.authenticate = function(username, password) {
-  var localToken = window.localStorage.getItem(this._localStorageKey);
+  var localToken = global.localStorage.getItem(this.getLocalStorageKey());
   if (localToken) {
     console.log('Using locally stored auth token');
     SOSEvents.emit('authenticated', localToken);
