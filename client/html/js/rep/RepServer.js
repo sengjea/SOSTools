@@ -14,6 +14,10 @@ RepServer.prototype.getLocalStorageKey = function() {
   return 'repAuthToken';
 };
 
+RepServer.prototype.getCredentials = function() {
+  return { username: 'test2', password: 'pass' };
+}
+
 // TODO: Add validation to each of these, emit error cases
 RepServer.prototype.setupListeners = function() {
   this._socket.on('get_own_chat_ids', function(data) {

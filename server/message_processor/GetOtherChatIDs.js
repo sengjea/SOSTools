@@ -28,20 +28,14 @@ AllChatsProcessor.register('get_other_chat_ids', function(params, socket) {
 		return {chats: [], rep: "Not a rep"};
 	}
 
-	if (all) {
-		return data.map(function(elem) {
-			return elem.chatID
-		});
-	} else {
-		// Return only those conversations
-		// with a single token associated
-		// with them.
-		return data.filter(function(elem) {
-			return elem.tokens.length === 1;
-		}).map(function(elem) {
-			return elem.chatID;
-		});
-	}
+  var chats = data.chats;
+  var ids = [];
+  for (var ii=0; ii<chats.length; ii++) {
+    if (all || chats[ii].tokens.length === 1) { 
+      ids.push(chats[ii].chatID);
+    }
+  }
+	return { chats: ids };
 });
 
 module.exports = AllChatsProcessor;

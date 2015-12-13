@@ -38,11 +38,17 @@ AuthMessageProcessor.register('send_token', function(params, socket) {
 
 	var updateSuccessful = data.updateSocket(token, socket);
 
-	if (!updateSuccessful) {
+	if (!updateSuccessful && !token) {
 		// The token wasn't found. Create a new one 
 		// for a helpee.
 		token = auth.genAuthToken(undefined, undefined, socket);
-	}
+	} else if (!updateSuccessful) {
+    // If we're here, we've lost what the token meant and can't 
+    // ensure we give the client back its proper privilegeds. 
+    // So, let's force them to reauth.
+    socket.emit('reauthentication_required');
+    return { error: 'Reauthentication required.' }  
+  }
 
 	return {token: token};
 });

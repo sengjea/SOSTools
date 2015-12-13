@@ -3,19 +3,16 @@ function _newChatID() {
 } 
 
 function _getTokenEntry(token) {
-	return _tokens.filter(function(elem) {
-		elem.token === token;
-	});
+  for (var ii=0; ii<_tokens.length; ii++) {
+		if (_tokens[ii].token === token) {
+      return _tokens[ii];
+    }
+  }
 }
 
 function _isRep(token) {
-	var entries = _getTokenEntry(token);
-
-	if (entries.length === 0) {
-		return false;
-	} else {
-		return entries[0].isRep;
-	}
+	var authData = _getTokenEntry(token);
+	return authData && authData.isRep;
 }
 
 /*
@@ -93,5 +90,5 @@ module.exports = {
 	isRep: _isRep,
 	getTokensFromChat: _getTokensFrom,
 	chatExists: _chatExists,
-	updateSocket: _updateSocket,
-}
+	updateSocket: _updateSocket
+};

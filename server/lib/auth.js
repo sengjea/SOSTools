@@ -19,18 +19,24 @@ function _genHelpeeAuthToken() {
 module.exports = {
   genAuthToken: function(username, password, socket) {
     var token;
-	var isRep = (username != undefined && password != undefined) && (users[username] && users[username] === password);
+	  var isRep = 
+      !(username === undefined ||
+        password === undefined ||
+        !users[username] ||
+        !users[username] === password);
+
     if (isRep) {
       token = _genAuthToken(username, password); 
     } else {
-	  token = _genHelpeeAuthToken();
+	    token = _genHelpeeAuthToken();
+	    data.chats.push({ 
+        chatID: data.newChatID(),
+		    conversation: [], 
+        tokens: [token]
+      });
+	  }
 
-	  data.chats.push({chatId: data.newChatID(),
-		conversation: [], tokens: [token]});
-	}
-
-	data.tokens.push({isRep: isRep, token: token, socket: socket});
-
+	  data.tokens.push({isRep: isRep, token: token, socket: socket});
     return token;
   }
 } 

@@ -23,8 +23,14 @@ Server.prototype.setCredentials = function(username, password) {
 }
 
 Server.prototype.setupCoreListeners = function() {
-    this._socket.on('connect', function() {
+  this._socket.on('connect', function() {
     SOSEvents.emit('socket_connected');
+    this.authenticate();
+  }.bind(this));
+
+  this._socket.on('reauthentication_required', function() {
+    console.log('Re-authentication required');
+    delete global.localStorage[this.getLocalStorageKey()];
     this.authenticate();
   }.bind(this));
 
