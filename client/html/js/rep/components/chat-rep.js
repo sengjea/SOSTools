@@ -1,12 +1,10 @@
 /** @jsx React.DOM */
 var React = require('react');
-
 var Header = require('./header.js');
 var Chats = require('./left-pane/chats.js');
 var Team = require('./left-pane/team.js');
 var MoreChatsToggle = require('./left-pane/more-chats-toggle.js');
 var ChatWindow = require('./right-pane/chat-window.js');
-
 
 var ChatRep = React.createClass({
   propTypes: {},
