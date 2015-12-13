@@ -25,7 +25,7 @@ AllChatsProcessor.register('get_other_chat_ids', function(params, socket) {
 	var isRep = data.isRep(token);
 
 	if (!isRep) {
-		return {chats: []};
+		return {chats: [], rep: "Not a rep"};
 	}
 
 	if (all) {
