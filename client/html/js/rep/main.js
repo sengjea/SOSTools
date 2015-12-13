@@ -1,8 +1,8 @@
 /** @jsx React.DOM */
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Server = require('./Server.js');
-var SOSEvents = require('./SOSEvents.js');
+var RepServer = require('./RepServer.js');
+var SOSEvents = require('../SOSEvents.js');
 
 SOSEvents.addListener('connected', function() {
   console.log('Yay! We\'re connected!');
@@ -19,4 +19,4 @@ ReactDOM.render(
   document.getElementById('container_rep')
 );
 
-Server.connect();
+RepServer.getInstance().connect();

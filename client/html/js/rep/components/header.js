@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 var React = require('react');
-var SOSEvents = require('../SOSEvents.js');
+var SOSEvents = require('../../SOSEvents.js');
 
 var s = getStyles();
 
