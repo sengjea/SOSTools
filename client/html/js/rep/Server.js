@@ -16,14 +16,22 @@ function _setupListeners() {
   Server._socket.on('disconnect', function(){
     SOSEvents.emit('disconnected');
   });
-  
-  Server._socket.on('get_token', function(data) {
+
+  function _onToken(data) { 
     console.log('get_token received');
     console.log(data);
     var token =  data[0].token;
     Server._token = token;
-    window.localStorage.setItem('authToken', token);
+    global.localStorage.setItem('authToken', token);
     SOSEvents.emit('authenticated', token);
+  }
+
+  Server._socket.on('get_token', function(data) {
+    _onToken(data);
+  });
+
+  Server._socket.on('set_token', function(data) {
+    _onToken(data);
   });
 
   Server._socket.on('get_own_chat_ids', function(data) {
@@ -41,6 +49,10 @@ function _setupListeners() {
     console.log(data);
     SOSEvents.emit('conversations_loaded', data);
   });
+
+  Server._socket.on('receive_message', function(data) {
+    SOSEvents.emit('message_received', data); 
+  });
 }
 
 var Server = {
@@ -57,6 +69,12 @@ var Server = {
       console.log('Using locally stored auth token');
       SOSEvents.emit('authenticated', window.localStorage.authToken);
       Server._token = window.localStorage.authToken;
+      
+      // Make sure the server knows we're know who we are
+      Server._socket.send(
+        'set_token',
+        { token: Server._token }
+      );
       return;
     }
     Server._socket.send(
@@ -93,15 +111,17 @@ var Server = {
   },
    
   sendMessage: function(conversationID, messageBody) {
-    /*
-    conversationID,
-    messageBody,
-    token
-    */
+    Server._socket.send(
+      'send_message',
+      {
+        chatID : chatID,
+        message: messageBody,
+        senderToken: Server._token
+      }
+    );
   }
- 
 };
 
-window.Server = Server;
+global.Server = Server;
 module.exports = Server;
 
