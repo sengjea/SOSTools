@@ -25,7 +25,7 @@ function _isRep(token) {
  * False if the update failed (i.e. a token wasn't found)
  */
 function _updateSocket(token, socket) {
-	for (i = 0; i < _tokens.length; i ++) {
+	for (var i = 0; i < _tokens.length; i ++) {
 		if (_tokens[i].token === token) {
 			_tokens[i].socket = socket;
 			return true;
@@ -38,7 +38,7 @@ function _updateSocket(token, socket) {
 // returns the chat if it exists
 // if it does not exist, we send back undefined.
 function _getChat(chatID) {
-	for (i = 0; i < _inactive_chats.length; i ++) {
+	for (var i = 0; i < _inactive_chats.length; i ++) {
 		if (_inactive_chats[i].chatID === chatID) {
 			return _inactive_chats[i];
 		}

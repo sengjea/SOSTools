@@ -19,7 +19,7 @@ function _genHelpeeAuthToken() {
 module.exports = {
   genAuthToken: function(username, password, socket) {
     var token;
-	var isRep = users[username] && users[username] === password;
+	var isRep = (username != undefined && password != undefined) && (users[username] && users[username] === password);
     if (isRep) {
       token = _genAuthToken(username, password); 
     } else {
