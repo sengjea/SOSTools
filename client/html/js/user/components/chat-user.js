@@ -5,6 +5,7 @@ var ChatWindow = require('./chat-window.js');
 var NewMessage = require('./new-message.js');
 var Loading = require('./loading.js');
 var SOSEvents = require('../../SOSEvents.js');
+var UserServer = require('../UserServer.js');
 
 var ChatUser = React.createClass({
   propTypes: {},
@@ -15,7 +16,16 @@ var ChatUser = React.createClass({
     }
   },
   componentDidMount() {
-    
+    SOSEvents.addListener(
+      'authenticated',
+      function(token) {
+        SOSEvents.addListener('own_chats_loaded', function(data) {
+          console.log(data);
+        });
+        UserServer.getInstance().getOwnConversations(); 
+        this.setState({ isLoading: false });
+      }.bind(this)
+    );    
   },
   render: function() {
     return (

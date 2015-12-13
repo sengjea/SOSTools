@@ -39,17 +39,19 @@ LoadConversationProcessor.register('load_conversation', function(params, socket)
 	} 
 
 	var chat = data.getChat(chatID);
-
+  console.log(chat);
 	if (data.isRep(token)) {
 		// In this case, they are always 
 		// cleared to see the chat
-		return {messages: chat.messages, 'status':'OK'}
+		return {messages: chat.conversation, 'status':'OK'}
 	} else {
 		if (contains(chat.tokens, token)) {
 			// We're OK
-			return {messages: chat.messages, 'status': 'OK'}
+			return {messages: chat.conversation, 'status': 'OK'}
 		}	
 	}
 
 	return {messages: [], 'status': "Not cleared to view this conversation"}
 });
+
+module.exports = LoadConversationProcessor;

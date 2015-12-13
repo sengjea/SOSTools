@@ -31,7 +31,13 @@ module.exports = {
 	    token = _genHelpeeAuthToken();
 	    data.chats.push({ 
         chatID: data.newChatID(),
-		    conversation: [], 
+		    conversation: [
+          {
+            sender_token: '0f00bar',
+            time: Date.now(),
+            message: 'This is the auto-generated fist message.'
+          }
+        ], 
         tokens: [token]
       });
 	  }

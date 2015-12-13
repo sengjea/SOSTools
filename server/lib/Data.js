@@ -90,5 +90,6 @@ module.exports = {
 	isRep: _isRep,
 	getTokensFromChat: _getTokensFrom,
 	chatExists: _chatExists,
-	updateSocket: _updateSocket
+	updateSocket: _updateSocket,
+  getChat: _getChat
 };

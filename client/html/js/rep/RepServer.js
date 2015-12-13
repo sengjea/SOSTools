@@ -20,10 +20,6 @@ RepServer.prototype.getCredentials = function() {
 
 // TODO: Add validation to each of these, emit error cases
 RepServer.prototype.setupListeners = function() {
-  this._socket.on('get_own_chat_ids', function(data) {
-    SOSEvents.emit('own_chats_loaded', data);
-  });
-
   this._socket.on('join_conversation', function(data) {
     console.log('conversation joined');
     console.log(data);
@@ -39,10 +35,6 @@ RepServer.prototype.setupListeners = function() {
   this._socket.on('receive_message', function(data) {
     SOSEvents.emit('message_received', data);
   });
-};
-
-RepServer.prototype.getOwnConversations = function() {
-  this._socket.send('get_own_chat_ids', { token: this._token });
 };
 
 RepServer.prototype.joinConversation = function(chatID) {

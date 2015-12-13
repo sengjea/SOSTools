@@ -48,9 +48,8 @@ Server.prototype.setupCoreListeners = function() {
   });
 
   var _onToken = function(data) {
-    console.log('get_token fired');
-    console.log(data);
     var token =  data[0].token;
+    console.log('get_token fired: ' + token);
     this._token = token;
     global.localStorage.setItem(this.getLocalStorageKey(), token);
     SOSEvents.emit('authenticated', token);
@@ -63,6 +62,19 @@ Server.prototype.setupCoreListeners = function() {
   this._socket.on('send_token', function(data) {
     _onToken(data);
   });
+
+  this._socket.on('get_own_chat_ids', function(data) {
+    SOSEvents.emit('own_chats_loaded', data);
+  });
+
+  this._socket.on(
+    'load_conversation',
+    function(data) {
+      console.log(data);
+      SOSEvents.emit('conversation_loaded', data);
+    }
+  );
+
 };
 
 Server.prototype.setupListeners = function() {
@@ -103,6 +115,20 @@ Server.prototype.authenticate = function() {
     }
   );
 };
+
+Server.prototype.getOwnConversations = function() {
+  this._socket.send('get_own_chat_ids', { token: this._token });
+};
+
+Server.prototype.loadMessages = function(chatID) {
+  this._socket.send(
+    'load_conversation',
+    {
+      chatID: chatID,
+      token: this._token
+    }
+  );
+}
 
 Server.prototype.sendMessage = function(conversationID, messageBody) {
   this._socket.send(
