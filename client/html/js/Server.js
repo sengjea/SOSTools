@@ -10,10 +10,10 @@ Server.prototype.getLocalStorageKey = function() {
   throw new Error('getLocalStorageKey must be implemented by a subclass');
 }
 
-Server.prototype.setupCoreListeners = function() {
+Server.prototype.setupCoreListeners = function(username, password) {
     this._socket.on('connect', function() {
     SOSEvents.emit('socket_connected');
-    this.authenticate();
+    this.authenticate(username, password);
   }.bind(this));
 
   this._socket.on('message', function(data){
@@ -29,8 +29,8 @@ Server.prototype.setupCoreListeners = function() {
     SOSEvents.emit('socket_error');
   });
 
-  var _onToken = function(data) { 
-    console.log('get_token received');
+  var _onToken = function(data) {
+    console.log('get_token fired');
     console.log(data);
     var token =  data[0].token;
     this._token = token;
@@ -48,17 +48,17 @@ Server.prototype.setupCoreListeners = function() {
 };
 
 Server.prototype.setupListeners = function() {
-  // hm... ? 
+  // hm... ?
 };
 
 Server.prototype.getInstance = function() {
   return this._instance;
 }
 
-Server.prototype.connect = function() {
+Server.prototype.connect = function(username, password) {
   var socket = io('ws://localhost:8887');
   this._socket = socket;
-  this.setupCoreListeners();
+  this.setupCoreListeners(username, password);
   this.setupListeners();
 }
 
@@ -68,7 +68,7 @@ Server.prototype.authenticate = function(username, password) {
     console.log('Using locally stored auth token');
     SOSEvents.emit('authenticated', localToken);
     this._token = localToken;
-    
+
     // Make sure the server knows we're know who we are
     this._socket.send(
       'send_token',
@@ -77,9 +77,9 @@ Server.prototype.authenticate = function(username, password) {
     return;
   }
   this._socket.send(
-    'get_token', 
-    { 
-      name: username, 
+    'get_token',
+    {
+      name: username,
       password: password
     }
   );

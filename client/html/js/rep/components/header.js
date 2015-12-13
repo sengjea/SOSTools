@@ -44,9 +44,9 @@ var Header = React.createClass({
 function getStyles() {
   return {
     container: {
-      background: '#d8d8d8',
+      background: '#528ab3',
       padding: '10px 8px',
-      color: '#000',
+      color: '#fff',
       height: 100,
     },
     helplineName: {
@@ -58,10 +58,11 @@ function getStyles() {
     },
     userName: {
       marginBottom: 10,
+      color: '#000',
     },
     logoutButton: {
       display: 'block',
-      color: '#4a90e2',
+      color: '#fff',
     },
     userImage: {
       borderRadius: 40,

@@ -4,6 +4,7 @@ var Header = require('./header.js');
 var ChatWindow = require('./chat-window.js');
 var NewMessage = require('./new-message.js');
 var Loading = require('./loading.js');
+var SOSEvents = require('../../SOSEvents.js');
 
 var ChatUser = React.createClass({
   propTypes: {},
@@ -14,7 +15,7 @@ var ChatUser = React.createClass({
     }
   },
   componentDidMount() {
-
+    
   },
   render: function() {
     return (

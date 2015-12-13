@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 var React = require('react');
+var RepServer = require('../../RepServer.js');
+var SOSEvents = require('../../../SOSEvents.js');
 var _ = require('underscore');
 var ChatNotes = require('./chat-notes.js');
 var s = getStyles();
@@ -10,17 +12,14 @@ var ChatWindow = React.createClass({
   getInitialState() {
     return {
       isNoteOpen: false,
-      messagesList: [
-        {
-          received: true,
-          message: 'qwdqwlidhwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwqldij dwqlidjwqwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjw ldijqw ld1',
-        },
-        {
-          received: false,
-          message: 'qwdqwliwliwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwq ldijqw ld2',
-        },
-      ],
+      messagesList: [],
+      currentMessage: '',
     };
+  },
+  componentDidMount() {
+    SOSEvents.addListener('message_received', function(data) {
+
+    });
   },
   toggleNotes() {
     this.setState({isNoteOpen: !this.state.isNoteOpen});
@@ -29,10 +28,20 @@ var ChatWindow = React.createClass({
     return this.state.messagesList.map(function(message, index) {
       return (
         <div style={message.received ? s.receivedMessage : s.sentMessage} key={index}>
+          <div style={{textAlign: 'right', marginBottom: 10, color: '#9b9b9b'}}>{message.time}</div>
           {message.message}
         </div>
       );
     });
+  },
+  handelKeyPressed(e) {
+    if (e.key === 'Enter' && this.state.currentMessage !== '') {
+      RepServer.getInstance().sendMessage(this.state.currentMessage);
+      this.setState({currentMessage: ''});
+    }
+  },
+  handleChange(event) {
+    this.setState({currentMessage: event.value});
   },
   render: function() {
     var messagesStyle = s.messagesList;
@@ -52,15 +61,17 @@ var ChatWindow = React.createClass({
           </div>
           <div style={s.newMessage}>
             <div className='form-group col-xs-10'>
-              <input type='text' className='form-control'
-                placeholder='Start Helping here. press ENTER to send.'/>
+              <input type='text' className='form-control' style={{padding: 25}}
+                placeholder='Start Helping here. press ENTER to send.'
+                onKeyPress={this.handelKeyPressed}
+                onChange={this.handleChange}
+                value={this.state.currentMessage}/>
             </div>
             <span style={s.toggleNotes} onClick={this.toggleNotes}>
               {this.state.isNoteOpen ?
                 <i className='glyphicon glyphicon-chevron-up' />
               : <i className='glyphicon glyphicon-chevron-down' />}
             </span>
-
           </div>
           {this.state.isNoteOpen ? <ChatNotes /> : null}
         </div>
@@ -106,15 +117,17 @@ function getStyles() {
       background: '#ede9e9',
       width: '80%',
       marginBottom: 5,
+      borderRadius: 5,
     },
     sentMessage: {
       padding: '15px 20px',
       fontSize: 14,
       lineHeight: '14px',
-      background: '#50e3c2',
+      background: 'rgba(79, 227, 194, .20)',
       width: '80%',
       marginLeft: '20%',
       marginBottom: 5,
+      borderRadius: 5,
     },
   };
 }

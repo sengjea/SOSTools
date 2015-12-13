@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 var React = require('react');
+var SOSEvents = require('../../../SOSEvents.js');
+var RepServer = require('../../RepServer.js');
 var s = getStyles();
 
 var Chats = React.createClass({
@@ -7,38 +9,58 @@ var Chats = React.createClass({
   getInitialState() {
     return {
       chats: [
-        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
-        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
-        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
-        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
-        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
-        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
-        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
-        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
-        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
-        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
-        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
-        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
-        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
-        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
-        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
-        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
-        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
-        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
-        {nbUnread: 4, topic: 'The last few words...', colour: '#ce63e4'},
-        {nbUnread: 0, topic: 'The last few words...', colour: '#f5a623'},
-      ]
+        {
+          chatId: 'toto',
+          colour: 'blue',
+          topic: 'toto',
+          nbUnread: 3,
+        },
+        {
+          chatId: 'toto',
+          colour: 'red',
+          topic: 'toto',
+          nbUnread: 3,
+        },
+        {
+          chatId: 'toto',
+          colour: 'yellow',
+          topic: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+          nbUnread: 0,
+        }
+      ],
     };
+  },
+  componentDidMount() {
+    SOSEvents.addListener('own_chats_loaded', function(data) {
+
+      console.log(data);
+    });
+
+    SOSEvents.addListener('conversation_joined', function(data) {
+
+      console.log(data);
+    });
+  },
+  loadChat(chatId) {
+    //RepServer.getInstance().joinConversation(chatId);
   },
   renderChats() {
     return this.state.chats.map(function(chat, index) {
       return (
-        <div style={{background: chat.colour, padding: 10, cursor: 'pointer'}} key={index}>
+        <div
+          style={{
+            borderLeft: '10px solid ' + chat.colour,
+            padding: 10, cursor: 'pointer',
+            borderBottom: '1px solid white',
+            }}
+          key={index}
+          onClick={this.loadChat(chat.chatId)}>
+          {chat.topic.substr(0, 15)}
+          {chat.topic.length > 15 ? '...' : null}
           {chat.nbUnread !== 0 ? <div style={s.badge}>{chat.nbUnread}</div> : null}
-          {chat.topic}
         </div>
       );
-    });
+    }.bind(this));
   },
   render: function() {
     return (
@@ -53,21 +75,23 @@ var Chats = React.createClass({
 function getStyles() {
   return {
     container: {
-      background: '#9b9898',
+      background: '#528ab3',
+      borderTop: '1px solid #fff',
       width: '100%',
       fontSize: 14,
-      color: '#000',
+      color: '#fff',
       height: window.innerHeight - 320,
       overflow: 'scroll',
     },
     title: {
-      marginBottom: 10,
       fontSize: 20,
       padding: 10,
+      borderBottom: '1px solid #fff',
     },
     badge: {
-      float: 'left',
+      float: 'right',
       background: '#fff',
+      color: 'black',
       borderRadius: 20,
       padding: '1px 7px',
       marginRight: 10,

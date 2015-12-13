@@ -17,7 +17,7 @@ RepServer.prototype.getLocalStorageKey = function() {
 // TODO: Add validation to each of these, emit error cases
 RepServer.prototype.setupListeners = function() {
   this._socket.on('get_own_chat_ids', function(data) {
-    SOSEvents.emit('owned_chats_loaded', data);
+    SOSEvents.emit('own_chats_loaded', data);
   });
 
   this._socket.on('join_conversation', function(data) {
@@ -33,19 +33,19 @@ RepServer.prototype.setupListeners = function() {
   });
 
   this._socket.on('receive_message', function(data) {
-    SOSEvents.emit('message_received', data); 
+    SOSEvents.emit('message_received', data);
   });
 };
 
 RepServer.prototype.getOwnConversations = function() {
-  this._socket.send('get_own_chat_ids', { token: this._token }); 
+  this._socket.send('get_own_chat_ids', { token: this._token });
 };
 
 RepServer.prototype.joinConversation = function(chatID) {
   this._socket.send(
-    'join_conversation', 
+    'join_conversation',
     {
-      chatID: chatID, 
+      chatID: chatID,
       token: this._token
     }
   );
@@ -54,13 +54,12 @@ RepServer.prototype.joinConversation = function(chatID) {
 RepServer.prototype.loadConversations = function(loadOnlyEmpty) {
   this._socket.send(
     'get_other_chat_ids',
-    { 
+    {
       token : this._token,
       all : !loadOnlyEmpty
     }
   );
 },
-   
+
 global.Server = RepServer;
 module.exports = RepServer;
-

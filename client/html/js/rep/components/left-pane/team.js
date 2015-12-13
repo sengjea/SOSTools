@@ -28,12 +28,12 @@ var Team = React.createClass({
 function getStyles() {
   return {
     container: {
-      background: '#9b9898',
+      background: '#528ab3',
       width: '100%',
       padding: 10,
-      borderTop: '1px solid #000',
+      borderTop: '1px solid #fff',
       fontSize: 20,
-      color: '#000',
+      color: '#fff',
       height: 160,
     },
     title: {

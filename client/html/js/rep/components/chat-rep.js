@@ -6,6 +6,8 @@ var Team = require('./left-pane/team.js');
 var MoreChatsToggle = require('./left-pane/more-chats-toggle.js');
 var ChatWindow = require('./right-pane/chat-window.js');
 var Loading = require('./loading.js');
+var SOSEvents = require('../../SOSEvents.js');
+var RepServer = require('../RepServer.js');
 
 var ChatRep = React.createClass({
   propTypes: {},
@@ -15,9 +17,12 @@ var ChatRep = React.createClass({
     }
   },
   componentDidMount() {
-
-    this.setState({isLoading: false});
-
+    SOSEvents.addListener('authenticated', function(token) {
+      SOSEvents.addListener('own_chats_loaded', function(data) {
+        this.setState({isLoading: false});
+      }.bind(this));
+      RepServer.getInstance().getOwnConversations();
+    }.bind(this));
   },
   render: function() {
 
