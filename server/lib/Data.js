@@ -62,15 +62,17 @@ function _chatExists(chatID) {
 // returns the tokens associated with a given chat ID.
 // Will return the empty list if no such chat exists.
 function _getTokensFrom(chatID) {
-	var chat = _inactive_chats.filter(function(elem) {
-		return elem.chatID === chatID;
-	});
+	var chat = getChat(chatID);
 
-	if (chat.length === 0) {
-		return [];
+	if (chat === undefined) {
+		return []; 
 	}
 
-	return chat[0].tokens;
+	return chat.tokens;
+}
+
+function _getSocketFor(token) {
+	return _getTokenEntry(token).socket;
 }
 
 var _tokens = []; // {boolean: isRep, string: token, socket: socket}
@@ -101,5 +103,6 @@ module.exports = {
 	chatExists: _chatExists,
 	updateSocket: _updateSocket,
     getChat: _getChat,
-    addToHistory: _addToHistory
+    addToHistory: _addToHistory,
+    getSocketFor: _getSocketFor
 };
