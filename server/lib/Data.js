@@ -18,7 +18,7 @@ function _isRep(token) {
 function _addToHistory(chatID, params) {
 	for (var ii = 0; ii < _inactive_chats.length; ii ++) {
 		if(_inactive_chats[i].chatID === chatID) {
-			inactive_chats[i].conversation.push(params);
+			_inactive_chats[i].conversation.push(params);
 			return;
 		}
 	}
