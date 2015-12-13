@@ -25,11 +25,11 @@ var ChatWindow = React.createClass({
   componentDidMount() {
     SOSEvents.once(
       'conversation_loaded',
-      function(data) { 
-        this.setState({ 
+      function(data) {
+        this.setState({
           conversationLoaded: true,
-          messagesList: 
-            this.state.messagesList.concat(data[0].messages) 
+          messagesList:
+            this.state.messagesList.concat(data[0].messages)
         });
       }.bind(this)
     );
@@ -43,10 +43,10 @@ var ChatWindow = React.createClass({
         this.setState({ messagesList : list });
       }.bind(this)
     );
-  },  
+  },
 
   componentDidUpdate: function() {
-    this.refs.chatWindow.scrollTop = 
+    this.refs.chatWindow.scrollTop =
       this.refs.chatWindow.scrollHeight + 'px';
     window.scrollTo(0, this.refs.chatWindow.scrollHeight);
   },
@@ -58,7 +58,7 @@ var ChatWindow = React.createClass({
       return (
         <div style={!is_your_own_message ? s.receivedMessage : s.sentMessage} key={index}>
           <div style={s.sender}>
-            {message.received ? this.props.repName : 'You:'}
+            {is_your_own_message ? 'You:' : ''}
             <div style={s.time}>{message.time}</div>
           </div>
           {message.message}
