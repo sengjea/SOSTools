@@ -46,10 +46,9 @@ var Chats = React.createClass({
             borderBottom: '1px solid white',
             }}
           key={index}
-          onClick={this.loadChat.bind(null, chat.chatID)}>
-          {chat.conversation.length === 0 ? 'New chat...' :
-            chat.conversation[chat.conversation.length - 1].substr(0, 15)
-          }
+          onClick={this.loadChat.bind(null, chat.chatID)}
+        >
+          {chat.conversation[chat.conversation.length - 1].message.substr(0, 25)}...
           {chat.nbUnread !== 0 ? <div style={s.badge}>{chat.nbUnread}</div> : null}
         </div>
       );

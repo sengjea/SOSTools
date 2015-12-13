@@ -20,15 +20,23 @@ var ChatWindow = React.createClass({
     SOSEvents.addListener('message_received', function(data) {
 
     });
+
+    SOSEvents.addListener('conversation_loaded', function(data) {
+      this.setState({messagesList: data[0].messages});
+    }.bind(this));
   },
   toggleNotes() {
     this.setState({isNoteOpen: !this.state.isNoteOpen});
   },
   renderMessages() {
+    var myToken = RepServer.getInstance().getToken();
+
     return this.state.messagesList.map(function(message, index) {
+      var d = new Date(message.time);
+
       return (
-        <div style={message.received ? s.receivedMessage : s.sentMessage} key={index}>
-          <div style={{textAlign: 'right', marginBottom: 10, color: '#9b9b9b'}}>{message.time}</div>
+        <div style={message.sender_token !== myToken ? s.receivedMessage : s.sentMessage} key={index}>
+          <div style={{textAlign: 'right', marginBottom: 10, color: '#9b9b9b'}}>{d.toString()}</div>
           {message.message}
         </div>
       );
@@ -44,17 +52,24 @@ var ChatWindow = React.createClass({
     this.setState({currentMessage: event.value});
   },
   render: function() {
+
     var messagesStyle = s.messagesList;
 
     if (this.state.isNoteOpen) {
       messagesStyle = _.extend(_.clone(s.messagesList), {height: window.innerHeight - 425});
     }
 
+    if (this.state.messagesList.length === 0) {
+      return (null);
+    }
+
+    var startDate = new Date(this.state.messagesList[0].time);
+
     return (
       <div>
         <div style={s.container}>
           <div style={s.header}>
-            Someone is asking for help. Chat Started at 19:30
+            Someone is asking for help. Chat Started at {startDate.toString()}
           </div>
           <div style={messagesStyle}>
             {this.renderMessages()}
@@ -87,7 +102,7 @@ function getStyles() {
       paddingTop: 20,
     },
     header: {
-      width: 360,
+      width: '80%',
       fontSize: 14,
       height: 30,
       padding: '5px 20px',

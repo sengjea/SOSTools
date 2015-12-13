@@ -10,15 +10,15 @@ var Team = React.createClass({
         <div style={s.title}>TEAM</div>
         <div style={s.stats}>
           Queue
-          <div style={s.number}>5</div>
+          <div style={s.number}>-</div>
         </div>
         <div style={s.stats}>
           Active Chats
-          <div style={s.number}>36</div>
+          <div style={s.number}>-</div>
         </div>
         <div style={s.stats}>
           Active Helpers
-          <div style={s.number}>12</div>
+          <div style={s.number}>-</div>
         </div>
       </div>
     );
