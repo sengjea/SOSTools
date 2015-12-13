@@ -8,7 +8,9 @@ var Header = React.createClass({
   render: function() {
     return (
       <div className='container-fluid' style={s.container}>
-        <div className='col-xs-8' style={s.helplineName}>HELP LINE NAME</div>
+        <div className='col-xs-8' style={s.helplineName}>
+          Helpline Bling
+        </div>
         <div className='col-xs-4'>
           <img src='images/cath.png' style={s.userImage} />
           <div style={s.userDetails}>
