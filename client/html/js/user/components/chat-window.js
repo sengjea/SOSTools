@@ -1,91 +1,47 @@
 /** @jsx React.DOM */
 var React = require('react');
+var UserServer = require('../UserServer.js');
+var SOSEvents = require('../../SOSEvents.js');
 var s = getStyles();
 
 var ChatWindow = React.createClass({
   propTypes: {
     repName: React.PropTypes.string,
+    chatID: React.PropTypes.string,
   },
   getInitialState() {
     return {
+      conversationLoaded: false,
       messagesList: [
         {
-          received: true,
-          message: 'qwdqwlidhwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwqldij dwqlidjwqwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjw ldijqw ld1',
-          time: '19:32',
-        },
-        {
-          received: false,
-          message: 'qwdqwliwliwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwq ldijqw ld2',
-          time: '19:56',
-        },
-        {
-          received: true,
-          message: 'qwdqwlidhwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwqldij dwqlidjwqwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjw ldijqw ld1',
-          time: '19:32',
-        },
-        {
-          received: false,
-          message: 'qwdqwliwliwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwq ldijqw ld2',
-          time: '19:56',
-        },
-        {
-          received: true,
-          message: 'qwdqwlidhwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwqldij dwqlidjwqwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjw ldijqw ld1',
-          time: '19:32',
-        },
-        {
-          received: false,
-          message: 'qwdqwliwliwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwq ldijqw ld2',
-          time: '19:56',
-        },
-        {
-          received: true,
-          message: 'qwdqwlidhwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwqldij dwqlidjwqwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjw ldijqw ld1',
-          time: '19:32',
-        },
-        {
-          received: false,
-          message: 'qwdqwliwliwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwq ldijqw ld2',
-          time: '19:56',
-        },
-        {
-          received: true,
-          message: 'qwdqwlidhwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwqldij dwqlidjwqwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjw ldijqw ld1',
-          time: '19:32',
-        },
-        {
-          received: false,
-          message: 'qwdqwliwliwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwq ldijqw ld2',
-          time: '19:56',
-        },
-        {
-          received: true,
-          message: 'qwdqwlidhwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwqldij dwqlidjwqwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjw ldijqw ld1',
-          time: '19:32',
-        },
-        {
-          received: false,
-          message: 'qwdqwliwliwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwq ldijqw ld2',
-          time: '19:56',
-        },
-        {
-          received: true,
-          message: 'qwdqwlidhwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwqldij dwqlidjwqwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjw ldijqw ld1',
-          time: '19:32',
-        },
-        {
-          received: false,
-          message: 'qwdqwliwliwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwwlidhwqldij dwqlidjwdhwqldij dwqlidjwq ldijqw ld2',
-          time: '19:56',
+          token: UserServer.getInstance().getToken(),
+          message: 'Fetching messages...',
+          time: '',
         },
       ],
     };
   },
+
+  componentDidMount() {
+    SOSEvents.once(
+      'conversation_loaded',
+      function(data) { 
+        this.setState({ 
+          conversationLoaded: true,
+          messagesList: 
+            this.state.messagesList.concat(data[0].messages) 
+        });
+      }.bind(this)
+    );
+
+  },  
+
   renderMessages() {
+    var token = UserServer.getInstance().getToken();
     return this.state.messagesList.map(function(message, index) {
+      var is_your_own_message = message.token === token;
       return (
-        <div style={message.received ? s.receivedMessage : s.sentMessage} key={index}>
+        <div style={is_your_own_message ? s.receivedMessage : s.sentMessage} key={index}>
           <div style={s.sender}>
             {message.received ? this.props.repName : 'You:'}
             <div style={s.time}>{message.time}</div>
@@ -96,6 +52,9 @@ var ChatWindow = React.createClass({
     }.bind(this));
   },
   render: function() {
+    if (this.props.chatID) {
+      UserServer.getInstance().loadMessages(this.props.chatID);
+    }
     return (
       <div style={s.container}>
         {this.renderMessages()}

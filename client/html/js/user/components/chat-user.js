@@ -13,27 +13,41 @@ var ChatUser = React.createClass({
     return {
       repName: '',
       isLoading: true,
+      chatID: null,
     }
   },
   componentDidMount() {
-    SOSEvents.addListener(
+    SOSEvents.once(
       'authenticated',
       function(token) {
-        SOSEvents.addListener('own_chats_loaded', function(data) {
-          console.log(data);
-        });
+        console.log('Authenticated');
+        SOSEvents.once('own_chats_loaded', function(data) {
+          console.log('Chats loaded', data);
+          if (data.length && data[0].chats.length) {
+            var chatID = data[0].chats[0].chatID;
+            this.setState({ chatID: chatID });
+          }
+        }.bind(this));
         UserServer.getInstance().getOwnConversations(); 
         this.setState({ isLoading: false });
       }.bind(this)
     );    
   },
   render: function() {
+    var chatWindow;
+    if (this.state.chatID) {
+      chatWindow = 
+        <ChatWindow 
+          repName={this.state.repName}
+          chatID={this.state.chatID}
+        />;
+    }
     return (
       <div>
         {this.state.isLoading ? <Loading /> :
         <div>
           <Header repName={this.state.repName}/>
-          <ChatWindow repName={this.state.repName}/>
+          {chatWindow}
           <NewMessage />
         </div>
         }

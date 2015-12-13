@@ -78,7 +78,6 @@ Server.prototype.setupCoreListeners = function() {
   this._socket.on(
     'load_conversation',
     function(data) {
-      console.log(data);
       SOSEvents.emit('conversation_loaded', data);
     }
   );
@@ -104,7 +103,6 @@ Server.prototype.authenticate = function() {
   var localToken = global.localStorage.getItem(this.getLocalStorageKey());
   if (localToken) {
     console.log('Using locally stored auth token');
-    SOSEvents.emit('authenticated', localToken);
     this._token = localToken;
 
     // Make sure the server knows we're know who we are
@@ -129,6 +127,7 @@ Server.prototype.getOwnConversations = function() {
 };
 
 Server.prototype.loadMessages = function(chatID) {
+  console.log('Loading Messages!');
   this._socket.send(
     'load_conversation',
     {
