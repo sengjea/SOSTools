@@ -1,5 +1,6 @@
 var MessageProcessor = require('./MessageProcessor.js');
 var auth = require('../lib/auth.js');
+var data = require('../lib/Data.js');
 
 var AuthMessageProcessor = new MessageProcessor();
 
@@ -16,8 +17,8 @@ var AuthMessageProcessor = new MessageProcessor();
  *
  * The returned object is of the form {token: "...."}
  */
-AuthMessageProcessor.register('get_token', function(data, socket) {
-  var authToken = auth.genAuthToken(data.name, data.password, socket);
+AuthMessageProcessor.register('get_token', function(params, socket) {
+  var authToken = auth.genAuthToken(params.name, params.password, socket);
 
   return {token: authToken};
 }); 
@@ -32,8 +33,8 @@ AuthMessageProcessor.register('get_token', function(data, socket) {
  * It sends back a (potentiatlly new!) token. This is in the case
  * that the passed token could not be found.
  */
-AuthMessageProcessor.register('send_token', function(data, socket) {
-	var token = data['token'];
+AuthMessageProcessor.register('send_token', function(params, socket) {
+	var token = params['token'];
 
 	var updateSuccessful = data.updateSocket(token, socket);
 

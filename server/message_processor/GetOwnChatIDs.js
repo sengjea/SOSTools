@@ -28,7 +28,7 @@ SendMessageProcessor.register('get_own_chat_ids', function(params, socket) {
 
 	var token = params['token'];
 	var active_chats = data.chats.filter(function(elem) {
-		return (contains(elem.subscribers, token));
+		return (contains(elem.tokens, token));
 	});
 
 	return {chats: active_chats};
