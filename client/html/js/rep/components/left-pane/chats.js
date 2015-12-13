@@ -9,43 +9,35 @@ var Chats = React.createClass({
   getInitialState() {
     return {
       chats: [
-        {
-          chatId: 'toto',
-          colour: 'blue',
-          topic: 'toto',
-          nbUnread: 3,
-        },
-        {
-          chatId: 'toto',
-          colour: 'red',
-          topic: 'toto',
-          nbUnread: 3,
-        },
-        {
-          chatId: 'toto',
-          colour: 'yellow',
-          topic: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
-          nbUnread: 0,
-        }
       ],
     };
   },
   componentDidMount() {
     SOSEvents.addListener('own_chats_loaded', function(data) {
-
-      console.log(data);
-    });
+      this.setState({chats: data[0].chats});
+    }.bind(this));
 
     SOSEvents.addListener('conversation_joined', function(data) {
-
-      console.log(data);
-    });
+      if (data[0]) {
+        var currentChats = this.state.chats;
+        currentChats.push(data[0]);
+        this.setState({chats: currentChats});
+      }
+    }.bind(this));
   },
-  loadChat(chatId) {
-    //RepServer.getInstance().joinConversation(chatId);
+  loadChat(chatID) {
+    RepServer.getInstance().loadMessages(chatID);
   },
   renderChats() {
     return this.state.chats.map(function(chat, index) {
+      if (!chat.nbUnread) {
+        chat.nbUnread = 0;
+      }
+
+      if (!chat.colour) {
+        chat.colour = 'red';
+      }
+
       return (
         <div
           style={{
@@ -54,9 +46,10 @@ var Chats = React.createClass({
             borderBottom: '1px solid white',
             }}
           key={index}
-          onClick={this.loadChat(chat.chatId)}>
-          {chat.topic.substr(0, 15)}
-          {chat.topic.length > 15 ? '...' : null}
+          onClick={this.loadChat.bind(null, chat.chatID)}>
+          {chat.conversation.length === 0 ? 'New chat...' :
+            chat.conversation[chat.conversation.length - 1].substr(0, 15)
+          }
           {chat.nbUnread !== 0 ? <div style={s.badge}>{chat.nbUnread}</div> : null}
         </div>
       );

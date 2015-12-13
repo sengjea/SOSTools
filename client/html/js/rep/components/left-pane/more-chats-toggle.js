@@ -25,8 +25,9 @@ var MoreChatsToggle = React.createClass({
   </div>*/
   addNewChat() {
     SOSEvents.addListener('conversations_loaded', function(data) {
-      console.log(data);
-      // join first one
+      if (data[0].chats) {
+        RepServer.getInstance().joinConversation(data[0].chats[0]);
+      }
     });
     RepServer.getInstance().loadConversations(true);
   },
