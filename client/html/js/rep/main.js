@@ -10,10 +10,6 @@ SOSEvents.addListener('connected', function() {
 
 SOSEvents.addListener('authenticated', function(token) {
   console.log('Authenticated: ' + token);
-  SOSEvents.addListener('owned_chats_loaded', function(data) {
-    console.log(data);
-  });
-  RepServer.getInstance().loadConversations();
 });
 
 var ChatRep = require('./components/chat-rep.js');
