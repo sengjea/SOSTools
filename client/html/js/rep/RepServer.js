@@ -23,7 +23,7 @@ RepServer.prototype.setupListeners = function() {
   this._socket.on('join_conversation', function(data) {
     console.log('conversation joined');
     console.log(data);
-    SOSEvents.emit('conversation_joined', data);
+    SOSEvents.emit('conversation_joined', data.conversation);
   });
 
   this._socket.on('get_other_chat_ids', function(data) {

@@ -18,7 +18,7 @@ var JoinChatProcessor = new MessageProcessor();
  *
  * If the creation is successful, then we get
  *
- * {'created': true}
+ * {'created': true, chat: {/* The chat object that was just joined * /}}
  */
 JoinChatProcessor.register('join_conversation', function(params, socket) { 
 	var chatID = params['chatID'];
@@ -35,7 +35,7 @@ JoinChatProcessor.register('join_conversation', function(params, socket) {
 		}
 	}
 
-	return chat;
+	return {'created': true, chat: chat};
 });
 
 module.exports = JoinChatProcessor;
