@@ -1,4 +1,4 @@
-var MessageProcessor = require('../message_processor/MessageProcessor.js');
+var MessageProcessor = require('../processors/MessageProcessor.js');
 var processors = {};
 
 function _registerProcessor(type, callback) {
