@@ -1,5 +1,7 @@
 var md5 = require('md5');
-var data = require('./Data.js');
+ 
+var AuthResponse = require('../lib/responses/AuthResponse.js');
+var AuthResponse = require('../lib/responses/AuthException.js');
 
 var users = {
   'test_rep' : 'test_password',
@@ -12,42 +14,23 @@ function _genAuthToken(username, password) {
   return md5(username + ':' + password);
 }
 
-function _genHelpeeAuthToken() {
-  return md5(Date.now())
+function _genAnonymousToken() {
+  return md5(Date.now());
 }
 
 module.exports = {
-  genAuthToken: function(username, password, socket) {
-    var token;
+  validateCredentials: function(username, password, socket) {
 	  var isRep = 
       !(username === undefined ||
         password === undefined ||
         !users[username] ||
         !users[username] === password);
-
-    if (isRep) {
-      token = _genAuthToken(username, password); 
-    } else {
-	    token = _genHelpeeAuthToken();
-	    data.chats.push({ 
-        chatID: data.newChatID(),
-		    conversation: [
-          {
-            sender_token: '0f00bar',
-            time: Date.now(),
-            message: 'This is the auto-generated fist message.'
-          }
-        ], 
-        tokens: [token]
-      });
-	  }
-
-	  data.tokens.push({ 
-      isRep: isRep, 
-      token: token, 
-      socket: socket
-    });
-
-    return token;
+    if (!isRep) {
+      return new AuthException('User not found'); 
+    } 
+    return new AuthResponse(_genAuthToken(username, password));
+  },
+  generateAnonymousToken: function() {
+    return new AuthResponse(_genAnonymousToken());
   }
 } 
