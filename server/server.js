@@ -1,6 +1,6 @@
 var io = require('socket.io')(8887);
 var auth = require('./lib/auth.js');
-var MessageHandler = require('./message_handler/MessageHandler.js');
+var MessageHandler = require('./handler/MessageHandler.js');
 var AuthMessageProcessor = require('./processors/AuthMessageProcessor.js');
 var SendMessageProcessor = require('./processors/SendMessageProcessor.js');
 var GetOtherChatIDs = require('./processors/GetOtherChatIDs.js');
