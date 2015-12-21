@@ -1,6 +1,6 @@
 var MessageProcessor = require('./MessageProcessor.js');
-var auth = require('../lib/auth.js');
-var data = require('../lib/Data.js');
+var Auth = require('../lib/Auth.js');
+var Data = require('../lib/Data.js');
 
 var AuthMessageProcessor = new MessageProcessor();
 
@@ -18,7 +18,7 @@ var AuthMessageProcessor = new MessageProcessor();
  * The returned object is of the form {token: "...."}
  */
 AuthMessageProcessor.register('get_token', function(params, socket) {
-  var authToken = auth.genAuthToken(params.name, params.password, socket);
+  var authToken = Auth.genAuthToken(params.name, params.password, socket);
 
   return {token: authToken};
 }); 
@@ -36,12 +36,12 @@ AuthMessageProcessor.register('get_token', function(params, socket) {
 AuthMessageProcessor.register('send_token', function(params, socket) {
 	var token = params['token'];
 
-	var updateSuccessful = data.updateSocket(token, socket);
+	var updateSuccessful = Data.updateSocket(token, socket);
 
 	if (!updateSuccessful && !token) {
 		// The token wasn't found. Create a new one 
 		// for a helpee.
-		token = auth.genAuthToken(undefined, undefined, socket);
+		token = Auth.genAuthToken(undefined, undefined, socket);
 	} else if (!updateSuccessful) {
     // If we're here, we've lost what the token meant and can't 
     // ensure we give the client back its proper privilegeds. 

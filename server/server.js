@@ -1,5 +1,4 @@
 var io = require('socket.io')(8887);
-var auth = require('./lib/auth.js');
 var MessageHandler = require('./handler/MessageHandler.js');
 var AuthMessageProcessor = require('./processors/AuthMessageProcessor.js');
 var SendMessageProcessor = require('./processors/SendMessageProcessor.js');
@@ -29,7 +28,6 @@ io.on('connection', function (socket) {
   });
 
   socket.on('disconnect', function () { 
-    console.log(auth.log);
     console.log('Disconnected');
   });
 });
