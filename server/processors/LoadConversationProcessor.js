@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 var MessageProcessor = require('./MessageProcessor.js');
 var auth = require('../lib/auth.js');
 var data = require('../lib/Data.js');
@@ -31,15 +33,6 @@ LoadConversationProcessor.register('load_conversation', function(params, socket)
     }
 	}
 
-	function contains(a, obj) {
-		for (var i = 0; i < a.length; i++) {
-			if (a[i] === obj) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	var chat = data.getChat(chatID);
 	if (data.isRep(token) && chat) {
 		// In this case, they are always
@@ -50,7 +43,7 @@ LoadConversationProcessor.register('load_conversation', function(params, socket)
       status: 'OK'
     };
 	} else if (chat) {
-		if (contains(chat.tokens, token)) {
+		if (_.contains(chat.tokens, token)) {
 			// We're OK
 			return {
         messages: chat.conversation, 
