@@ -25,8 +25,10 @@ LoadConversationProcessor.register('load_conversation', function(params, socket)
 	var chatID = params['chatID'];
 
 	if (!data.chatExists(chatID)) {
-		return {messages: [], 'status':
-			"Chat " + chatID + " does not exist"}
+		return {
+      messages: [], 
+      status: 'Chat ' + chatID + ' does not exist'
+    }
 	}
 
 	function contains(a, obj) {
@@ -42,17 +44,25 @@ LoadConversationProcessor.register('load_conversation', function(params, socket)
 	if (data.isRep(token) && chat) {
 		// In this case, they are always
 		// cleared to see the chat
-		return {messages: chat.conversation, chatID: chatID, 'status':'OK'}
+		return {
+      messages: chat.conversation, 
+      chatID: chatID, 
+      status: 'OK'
+    };
 	} else if (chat) {
 		if (contains(chat.tokens, token)) {
 			// We're OK
-			return {messages: chat.conversation, chatID: chatID, 'status': 'OK'}
+			return {
+        messages: chat.conversation, 
+        chatID: chatID, 
+        status: 'OK'
+      };
 		}
 	}
 
 	return {
     messages: [], 
-    'status': "Not cleared to view this conversation", 
+    status: 'Not cleared to view this conversation', 
     debug: { 
       providedToken: token,
       chatData: chat,
