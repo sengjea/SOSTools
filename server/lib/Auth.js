@@ -13,7 +13,7 @@ function _genAuthToken(username, password) {
 }
 
 function _genHelpeeAuthToken() {
-  return md5(Math.random())
+  return md5(Date.now())
 }
 
 module.exports = {
@@ -42,7 +42,12 @@ module.exports = {
       });
 	  }
 
-	  data.tokens.push({isRep: isRep, token: token, socket: socket});
+	  data.tokens.push({ 
+      isRep: isRep, 
+      token: token, 
+      socket: socket
+    });
+
     return token;
   }
 } 
