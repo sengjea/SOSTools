@@ -3,7 +3,7 @@ JSONResponse.prototype.toObject = function() {
   var jsonObject = {};
   var fieldName;
   var fields = this.getJSONFields();
-  for (fieldName in field) {
+  for (fieldName in fields) {
     jsonObject[fieldName] = this[fields[fieldName]()];
   }
   return jsonObject;
