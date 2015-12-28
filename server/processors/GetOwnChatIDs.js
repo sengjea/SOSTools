@@ -1,6 +1,6 @@
 var _ = require('underscore');
 var MessageProcessor = require('./MessageProcessor.js');
-var auth = require('../lib/auth.js');
+var auth = require('../lib/Auth.js');
 var data = require('../lib/Data.js');
 
 var SendMessageProcessor = new MessageProcessor();
