@@ -1,7 +1,7 @@
 var md5 = require('md5');
  
 var AuthResponse = require('../lib/responses/AuthResponse.js');
-var AuthResponse = require('../lib/responses/AuthException.js');
+var AuthException = require('../lib/responses/AuthException.js');
 
 var users = {
   'test_rep' : 'test_password',
