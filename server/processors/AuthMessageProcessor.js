@@ -17,13 +17,13 @@ var AuthMessageProcessor = new MessageProcessor();
  *
  * The returned object is of the form {token: "...."}
  */
-AuthMessageProcessor.register('get_auth_token', function(params, socket) {
-  return Auth.validateCredentials(params.name, params.password).toObject();
-}); 
-
-AuthMessageProcessor.register('get_anonymous_token', function(params, socket) {
-  return Auth.generateAnonymousToken().toObject()
-}); 
+AuthMessageProcessor.register('get_token', function(params, socket) {
+  if (params.name && params.password) {
+	return Auth.validateCredentials(params.name, params.password).toObject();
+  } else {
+    return Auth.generateAnonymousToken().toObject()
+  }
+});
 
 
 
