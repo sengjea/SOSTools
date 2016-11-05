@@ -24,8 +24,7 @@
   },
   "scripts": {
     "start": "jsxc --watch js/ build/",
-    "build": "jsxc js/ build/",
-    "grunt": "grunt --gruntfile gruntfile.js"
+    "build": "jsxc js/ build/ && grunt --gruntfile gruntfile.js build"
   },
   "files": [
     "lib/",

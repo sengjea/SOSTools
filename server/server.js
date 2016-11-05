@@ -1,4 +1,5 @@
-var io = require('socket.io')(8887);
+var io = require('socket.io');
+var express = require('express');
 var MessageHandler = require('./handler/MessageHandler.js');
 var AuthMessageProcessor = require('./processors/AuthMessageProcessor.js');
 var SendMessageProcessor = require('./processors/SendMessageProcessor.js');
@@ -17,7 +18,8 @@ MessageHandler.registerProcessors([
   LoadConversationProcessor
 ]);
 
-console.log('Starting the server');
+var app = express();
+var ws = io(app);
 io.on('connection', function (socket) {
   console.log('Connected');
 
@@ -31,3 +33,9 @@ io.on('connection', function (socket) {
     console.log('Disconnected');
   });
 });
+
+app.use(express.static(__dirname))
+app.listen(process.env.PORT || 3000, function () {
+  console.log(`Example app listening on port ${process.env.PORT || 3000}!`)
+});
+

@@ -5,13 +5,14 @@
   "scripts": {
     "server:npm" : "cd server && npm i",
     "client:npm" : "cd client && npm i",
-    "client:build" : "cd client && jsxc js/ build/ && grunt --gruntfile gruntfile.js build",
+    "client:build" : "cd client && npm run build",
     "postinstall": "concurrently 'npm run server:npm' 'npm run client:npm'",
-    "start": "concurrently 'node client/server.js' 'node server/server.js'"
+    "heroku-postbuild": "npm run client:build",
+    "start": "node server/server.js"
   },
   "dependencies" : {
 	"concurrently" : "3.1.0"
-  },
+},
   "engine" : {
 	"node": "^6.x",
 	"npm" : "^3.x"
