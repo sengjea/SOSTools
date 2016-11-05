@@ -8,6 +8,7 @@
   "main": "server.js",
   "dependencies": {
     "underscore": "^1.8.2",
+    "express": "^4.x",
     "socket.io": ">=1.3.7",
     "md5": ">=2.0.0"
   },

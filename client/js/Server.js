@@ -98,7 +98,7 @@ Server.prototype.getInstance = function() {
 }
 
 Server.prototype.connect = function() {
-  var socket = io('ws://localhost:8887');
+  var socket = io();
   this._socket = socket;
   this.setupCoreListeners();
   this.setupListeners();

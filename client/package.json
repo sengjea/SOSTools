@@ -11,8 +11,6 @@
     "react": ">=0.8",
     "react-dom": "15.3.2",
     "underscore": "^1.8.3",
-    "express": "^4.x",
-    "md5": ">=2.0.0",
     "grunt-react": "^0.12.3",
     "jsxc": ">=0.1.6"
   },

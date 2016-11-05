@@ -19,8 +19,15 @@ MessageHandler.registerProcessors([
 ]);
 
 var app = express();
-var ws = io(app);
-io.on('connection', function (socket) {
+
+app.use(express.static('client'))
+var server = app.listen(process.env.PORT || 3000, function () {
+  console.log(`Example app listening on port ${process.env.PORT || 3000}!`)
+});
+
+var ws = io(server);
+
+ws.on('connection', function (socket) {
   console.log('Connected');
 
   socket.on('message', function (type, data) { 
@@ -32,10 +39,5 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function () { 
     console.log('Disconnected');
   });
-});
-
-app.use(express.static(__dirname))
-app.listen(process.env.PORT || 3000, function () {
-  console.log(`Example app listening on port ${process.env.PORT || 3000}!`)
 });
 
