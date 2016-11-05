@@ -28,7 +28,9 @@ SendMessageProcessor.register('send_message', function(params, socket) {
 
 	broadcasts.forEach(function(sendToToken) {
 		var sendToSocket = data.getSocketFor(sendToToken)
-		sendToSocket.emit('receive_message', params);
+		if (sendToSocket) {
+			sendToSocket.emit('receive_message', params);
+		}
 	});
 });
 

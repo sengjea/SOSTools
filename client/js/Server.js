@@ -58,21 +58,25 @@ Server.prototype.setupCoreListeners = function() {
 
   var _onToken = function(data) {
     var token =  data[0].token;
-    console.log('get_token fired: ' + token);
     this._token = token;
-    global.localStorage.setItem(this.getLocalStorageKey(), token);
-    SOSEvents.emit('authenticated', token);
+    if (token) {
+    	global.localStorage.setItem(this.getLocalStorageKey(), token);
+    	SOSEvents.emit('authenticated', token);
+    }
   }.bind(this);
 
   this._socket.on('get_token', function(data) {
+    console.log('get_token fired: ' + data[0].token);
     _onToken(data);
   });
 
   this._socket.on('send_token', function(data) {
+    console.log('send_token fired: ' + data[0].token);
     _onToken(data);
   });
 
   this._socket.on('get_own_chat_ids', function(data) {
+    console.log('socket: get_own_chat_ids', JSON.stringify(data));
     SOSEvents.emit('own_chats_loaded', data);
   });
 

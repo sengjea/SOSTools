@@ -25,6 +25,7 @@ AuthMessageProcessor.register('get_token', function(params, socket) {
     token = Auth.generateAnonymousToken();	
     Data.tokens.push({ token: token, isRep: false });
   }
+    Data.updateSocket(token, socket);
     return Auth.generateResponse(token).toObject()
 });
 

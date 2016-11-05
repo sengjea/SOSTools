@@ -22,7 +22,7 @@ var ChatUser = React.createClass({
       function(token) {
         console.log('Authenticated');
         SOSEvents.once('own_chats_loaded', function(data) {
-          console.log('Chats loaded', JSON.stringify(data));
+          console.log('SOSEvents: own_chats_loaded', JSON.stringify(data));
           if (data.length && data[0].chats.length) {
             var chatID = data[0].chats[0].chatID;
             this.setState({ chatID: chatID });

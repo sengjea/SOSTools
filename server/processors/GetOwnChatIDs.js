@@ -27,6 +27,7 @@ SendMessageProcessor.register('get_own_chat_ids', function(params, socket) {
 		active_chats[0] = { "chatID": newChatID, "tokens" : [ token ], "conversation" : [] };
 		data.chats.push(active_chats[0]);	
 	}
+        console.log(JSON.stringify(params), JSON.stringify(data.chats), active_chats);
 	return {chats: active_chats};
 });
 
