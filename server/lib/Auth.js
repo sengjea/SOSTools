@@ -15,22 +15,22 @@ function _genAuthToken(username, password) {
 }
 
 function _genAnonymousToken() {
-  return md5(Date.now());
+  var token = md5(Date.now());
+  return token;
 }
 
 module.exports = {
   validateCredentials: function(username, password, socket) {
-	  var isRep = 
-      !(username === undefined ||
-        password === undefined ||
-        !users[username] ||
-        !users[username] === password);
-    if (!isRep) {
-      return new AuthException('User not found'); 
-    } 
-    return new AuthResponse(_genAuthToken(username, password));
+       if (username !== undefined &&
+        password !== undefined &&
+        users[username] && users[username] === password) {
+	return _genAuthToken(username, password);
+	} else { 
+	return null;
+	}
   },
-  generateAnonymousToken: function() {
-    return new AuthResponse(_genAnonymousToken());
+  generateAnonymousToken: _genAnonymousToken,
+  generateResponse: (token) => {
+	return new AuthResponse(token ? token : _genAnonymousToken());
   }
 } 

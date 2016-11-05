@@ -22,7 +22,11 @@ SendMessageProcessor.register('get_own_chat_ids', function(params, socket) {
 	var active_chats = data.chats.filter(function(elem) {
 		return (_.contains(elem.tokens, token));
 	});
-
+	if (active_chats.length == 0 && token && !data.isRep(token)) {
+		var newChatID = data.newChatID();
+		active_chats[0] = { "chatID": newChatID, "tokens" : [ token ], "conversation" : [] };
+		data.chats.push(active_chats[0]);	
+	}
 	return {chats: active_chats};
 });
 

@@ -8,21 +8,6 @@ var s = getStyles();
 
 var MoreChatsToggle = React.createClass({
   propTypes: {},
-  /*getInitialState() {
-    return {isEnabled: true};
-  },
-  toggle(event) {
-    this.setState({isEnabled: !this.state.isEnabled});
-  },
-  <div className='checkbox'>
-    <label>
-      <input
-        type='checkbox'
-        value=''
-        checked={this.state.isEnabled ? 'checked' : ''}
-        onChange={this.toggle}/> I'm available for more chats
-    </label>
-  </div>*/
   addNewChat() {
     SOSEvents.addListener('conversations_loaded', function(data) {
       if (data[0].chats) {

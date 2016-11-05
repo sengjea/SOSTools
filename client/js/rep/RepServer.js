@@ -21,14 +21,11 @@ RepServer.prototype.getCredentials = function() {
 // TODO: Add validation to each of these, emit error cases
 RepServer.prototype.setupListeners = function() {
   this._socket.on('join_conversation', function(data) {
-    console.log('conversation joined');
-    console.log(data);
-    SOSEvents.emit('conversation_joined', data.conversation);
+    SOSEvents.emit('conversation_joined', data);
   });
 
   this._socket.on('get_other_chat_ids', function(data) {
     console.log('chats loaded');
-    console.log(data);
     SOSEvents.emit('conversations_loaded', data);
   });
 
@@ -47,12 +44,12 @@ RepServer.prototype.joinConversation = function(chatID) {
   );
 };
 
-RepServer.prototype.loadConversations = function(loadOnlyEmpty) {
+RepServer.prototype.loadConversations = function(all) {
   this._socket.send(
     'get_other_chat_ids',
     {
       token : this._token,
-      all : !loadOnlyEmpty
+      all : all
     }
   );
 },

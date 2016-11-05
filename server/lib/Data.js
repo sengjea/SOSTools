@@ -4,20 +4,23 @@ function _newChatID() {
 
 function _getTokenEntry(token) {
   for (var ii=0; ii<_tokens.length; ii++) {
-		if (_tokens[ii].token === token) {
-      return _tokens[ii];
+	if (_tokens[ii].token === token) {
+      		return _tokens[ii];
     }
   }
 }
 
 function _isRep(token) {
 	var authData = _getTokenEntry(token);
-	return authData && authData.isRep;
+	return authData.isRep;
 }
 
 function _addToHistory(chatID, params) {
 	for (var ii = 0; ii < _inactive_chats.length; ii++) {
 		if(_inactive_chats[ii].chatID === chatID) {
+			if (! _inactive_chats[ii].conversation) {
+				_inactive_chats[ii].conversation = [];
+			}
 			_inactive_chats[ii].conversation.push(params);
 			return;
 		}
@@ -66,9 +69,10 @@ function _getTokensFrom(chatID) {
 
 	if (chat === undefined) {
 		return [];
+	} else if (chat.tokens === undefined) {
+		chat.tokens = [];
 	}
-
-	return chat.tokens;
+		return chat.tokens;
 }
 
 function _getSocketFor(token) {

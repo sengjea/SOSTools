@@ -21,6 +21,7 @@ var JoinChatProcessor = new MessageProcessor();
  * {'created': true, chat: {/* The chat object that was just joined * /}}
  */
 JoinChatProcessor.register('join_conversation', function(params, socket) { 
+	console.log('j_c', JSON.stringify(params), JSON.stringify(data.chats));
 	var chatID = params['chatID'];
 	var repToken = params['token'];
 	var chat = null;
@@ -30,7 +31,11 @@ JoinChatProcessor.register('join_conversation', function(params, socket) {
 	for (i = 0; i < data.chats.length; i ++) {
 		if (data.chats[i].chatID === chatID) {
 			chat = data.chats[i];
-			chat.tokens.push(repToken);
+			if (!chat.tokens) {
+				chat_tokens = [ repToken ];
+			} else if (chat.tokens.indexOf(repToken) === -1) {
+				chat.tokens.push(repToken);
+			}
 			break;
 		}
 	}

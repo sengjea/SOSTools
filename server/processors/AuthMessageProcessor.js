@@ -18,11 +18,14 @@ var AuthMessageProcessor = new MessageProcessor();
  * The returned object is of the form {token: "...."}
  */
 AuthMessageProcessor.register('get_token', function(params, socket) {
-  if (params.name && params.password) {
-	return Auth.validateCredentials(params.name, params.password).toObject();
+  var token = Auth.validateCredentials(params.name, params.password);
+  if (token) {
+    Data.tokens.push({ token: token, isRep: true });	
   } else {
-    return Auth.generateAnonymousToken().toObject()
+    token = Auth.generateAnonymousToken();	
+    Data.tokens.push({ token: token, isRep: false });
   }
+    return Auth.generateResponse(token).toObject()
 });
 
 
@@ -48,11 +51,12 @@ AuthMessageProcessor.register('send_token', function(params, socket) {
 		// for a helpee.
 		token = Auth.genAuthToken(undefined, undefined, socket);
 	} else if (!updateSuccessful) {
-    // If we're here, we've lost what the token meant and can't 
-    // ensure we give the client back its proper privilegeds. 
-    // So, let's force them to reauth.
-    socket.emit('reauthentication_required');
-    return { error: 'Reauthentication required.' }  
+	    // If we're here, we've lost what the token meant and can't 
+	    // ensure we give the client back its proper privilegeds. 
+	    // So, let's force them to reauth.
+	    socket.emit('reauthentication_required');
+	    return { error: 'Reauthentication required.'
+	}  
   }
 
 	return {token: token};

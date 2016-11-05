@@ -14,15 +14,13 @@ var Chats = React.createClass({
   },
   componentDidMount() {
     SOSEvents.addListener('own_chats_loaded', function(data) {
-      console.log('toto1', data);
-      console.log(data[0].chats);
       this.setState({chats: data[0].chats});
     }.bind(this));
 
     SOSEvents.addListener('conversation_joined', function(data) {
       if (data[0]) {
         var currentChats = this.state.chats;
-        currentChats.push(data[0]);
+        currentChats.push(data[0].chat);
         this.setState({chats: currentChats});
       }
     }.bind(this));
@@ -42,7 +40,6 @@ var Chats = React.createClass({
         if (!chat.colour) {
           chat.colour = 'red';
         }
-
         return (
           <div
             style={{
@@ -53,11 +50,11 @@ var Chats = React.createClass({
             key={index}
             onClick={this.loadChat.bind(null, chat.chatID)}
           >
-            {chat.conversation[chat.conversation.length - 1].message.substr(0, 25)}...
             {chat.nbUnread !== 0 ? <div style={s.badge}>{chat.nbUnread}</div> : null}
           </div>
         );
       }.bind(this));
+            /*{chat.conversation[chat.conversation.length - 1].message.substr(0, 25)}...*/
     }
   },
   render: function() {

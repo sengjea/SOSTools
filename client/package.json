@@ -10,14 +10,22 @@
     "grunt-contrib-watch": ">=0.6.1",
     "grunt-env": ">=0.4.1",
     "react": ">=0.8",
-    "underscore": "^1.8.3"
+    "react-dom": "15.3.2",
+    "underscore": "^1.8.3",
+    "express": "^4.x",
+    "md5": ">=2.0.0"
   },
   "devDependencies": {
+    "grunt-react": "^0.12.3",
     "jsxc": ">=0.1.6"
+  },
+  "peerDependencies": {
+    "grunt": ">=0.4.4"
   },
   "scripts": {
     "start": "jsxc --watch js/ build/",
-    "build": "jsxc js/ build/"
+    "build": "jsxc js/ build/",
+    "grunt": "grunt --gruntfile gruntfile.js"
   },
   "files": [
     "lib/",
@@ -27,5 +35,5 @@
   "staticRoot": "./static/",
   "staticPlugin": "statics-stylesheets",
   "author": "Jackson Gabbard",
-  "license": "Apache 2"
+  "license": "MIT"
 }
