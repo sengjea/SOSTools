@@ -14,7 +14,7 @@ var MoreChatsToggle = React.createClass({
         RepServer.getInstance().joinConversation(data[0].chats[0]);
       }
     });
-    RepServer.getInstance().loadConversations(true);
+    RepServer.getInstance().loadConversations(false);
   },
   render: function() {
     return (

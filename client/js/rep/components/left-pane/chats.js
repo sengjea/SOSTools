@@ -43,7 +43,7 @@ var Chats = React.createClass({
         return (
           <div
             style={{
-              borderLeft: '10px solid ' + chat.colour,
+              borderLeft: '25px solid ' + chat.colour,
               padding: 10, cursor: 'pointer',
               borderBottom: '1px solid white',
               }}

@@ -29,7 +29,6 @@ AllChatsProcessor.register('get_other_chat_ids', function(params, socket) {
 	}
 
   var chats = data.chats;
-  console.log('goci', JSON.stringify(data.chats));
   var ids = [];
   for (var ii=0; ii<chats.length; ii++) {
     if (all || chats[ii].tokens.length === 1) { 
