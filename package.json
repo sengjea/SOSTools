@@ -8,6 +8,7 @@
     "client:build" : "cd client && npm run build",
     "postinstall": "concurrently 'npm run server:npm' 'npm run client:npm'",
     "heroku-postbuild": "npm run client:build",
+    "test" : "npm run client:build",
     "start": "node server/server.js"
   },
   "dependencies" : {
