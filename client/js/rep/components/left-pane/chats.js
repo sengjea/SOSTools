@@ -24,6 +24,15 @@ var Chats = React.createClass({
         this.setState({chats: currentChats});
       }
     }.bind(this));
+
+    SOSEvents.addListener('conversation_loaded', function(data) {
+        var currentChats = this.state.chats;
+	currentChats.map((chat) => {
+		chat.active = chat.chatID === data[0].chatID;
+	})
+      this.setState({messagesList: data[0].messages, chatId: data[0].chatID});
+    }.bind(this));
+
     RepServer.getInstance().getOwnConversations();
   },
   loadChat(chatID) {
@@ -44,7 +53,7 @@ var Chats = React.createClass({
         return (
           <div
             style={{
-              borderLeft: '25px solid ' + chat.colour,
+              borderLeft: (chat.active ? '55px' : '25px') + ' solid ' + chat.colour,
               padding: 10, cursor: 'pointer',
               borderBottom: '1px solid white',
               }}

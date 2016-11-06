@@ -6,12 +6,14 @@
     "server:npm" : "cd server && npm i",
     "client:npm" : "cd client && npm i",
     "client:build" : "cd client && npm run build",
+    "client:start" : "concurrently 'cd client && npm run start:jsxc' 'cd client && npm run start:grunt'",
     "postinstall": "concurrently 'npm run server:npm' 'npm run client:npm'",
     "heroku-postbuild": "npm run client:build",
     "test" : "npm run client:build",
-    "start": "node server/server.js"
+    "start": "concurrently 'nodemon server/server.js' 'npm run client:start'"
   },
   "dependencies" : {
+	"nodemon": "^1.11.0",
 	"concurrently" : "3.1.0"
 },
   "engine" : {

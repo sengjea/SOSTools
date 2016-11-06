@@ -15,7 +15,8 @@
     "jsxc": ">=0.1.6"
   },
   "scripts": {
-    "start": "jsxc --watch js/ build/",
+    "start:jsxc": "jsxc --watch js/ build/",
+    "start:grunt": "grunt --gruntfile gruntfile.js",
     "build": "jsxc js/ build/ && grunt --gruntfile gruntfile.js build"
   },
   "author": "Jackson Gabbard",
