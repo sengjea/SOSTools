@@ -24,6 +24,7 @@ var Chats = React.createClass({
         this.setState({chats: currentChats});
       }
     }.bind(this));
+    RepServer.getInstance().getOwnConversations();
   },
   loadChat(chatID) {
     RepServer.getInstance().loadMessages(chatID);

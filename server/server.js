@@ -5,6 +5,7 @@ var AuthMessageProcessor = require('./processors/AuthMessageProcessor.js');
 var SendMessageProcessor = require('./processors/SendMessageProcessor.js');
 var GetOtherChatIDs = require('./processors/GetOtherChatIDs.js');
 var GetOwnChatIDs = require('./processors/GetOwnChatIDs.js');
+var StartChatProcessor = require('./processors/StartChatProcessor.js');
 var JoinChatProcessor = require('./processors/JoinChatProcessor.js');
 var LoadConversationProcessor = require('./processors/LoadConversationProcessor.js');
 
@@ -14,6 +15,7 @@ MessageHandler.registerProcessors([
   SendMessageProcessor,
   GetOtherChatIDs,
   GetOwnChatIDs,
+  StartChatProcessor,
   JoinChatProcessor,
   LoadConversationProcessor
 ]);

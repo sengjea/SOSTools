@@ -9,12 +9,14 @@ var s = getStyles();
 var MoreChatsToggle = React.createClass({
   propTypes: {},
   addNewChat() {
+    RepServer.getInstance().loadConversations(false);
+  },
+  componentDidMount() {
     SOSEvents.addListener('conversations_loaded', function(data) {
       if (data[0].chats) {
         RepServer.getInstance().joinConversation(data[0].chats[0]);
       }
     });
-    RepServer.getInstance().loadConversations(false);
   },
   render: function() {
     return (

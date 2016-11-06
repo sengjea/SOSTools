@@ -17,21 +17,24 @@ var ChatUser = React.createClass({
     }
   },
   componentDidMount() {
-    SOSEvents.on(
-      'authenticated',
-      function(token) {
-        console.log('Authenticated');
-        SOSEvents.once('own_chats_loaded', function(data) {
-          console.log('SOSEvents: own_chats_loaded', JSON.stringify(data));
-          if (data.length && data[0].chats.length) {
-            var chatID = data[0].chats[0].chatID;
-            this.setState({ chatID: chatID });
-	  }
-        }.bind(this));
-        UserServer.getInstance().getOwnConversations(); 
+    SOSEvents.on('conversation_started', function(data) {
+	this.setState({ chatID: data[0].chatID });	
+	}.bind(this)
+    );
+    SOSEvents.on('own_chats_loaded', function(data) {
+       if (data[0].chats.length) {
+         var chatID = data[0].chats[0].chatID;
+         this.setState({ chatID: chatID });
+       } else {
+     	UserServer.getInstance().StartConversation(); 
+       }
+     }.bind(this)
+    );
+    SOSEvents.on('authenticated', function(token) {
         this.setState({ isLoading: false });
+    	UserServer.getInstance().getOwnConversations(); 
       }.bind(this)
-    );    
+    ); 
   },
   render: function() {
     var chatWindow;

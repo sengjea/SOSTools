@@ -22,7 +22,8 @@ var ChatWindow = React.createClass({
   },
   componentDidMount() {
     SOSEvents.addListener('receive_message', function(data) {
-      if (data) {
+      console.log("cw-rw", JSON.stringify(data));
+      if (data && this.state.chatId === data.chatID) {
         var currentMessagesList = this.state.messagesList;
         currentMessagesList.push(data);
         this.setState({messagesList: currentMessagesList});
@@ -30,7 +31,6 @@ var ChatWindow = React.createClass({
     }.bind(this));
 
     SOSEvents.addListener('conversation_loaded', function(data) {
-      console.log("cw-cl", JSON.stringify(data));
       this.setState({messagesList: data[0].messages, chatId: data[0].chatID});
     }.bind(this));
   },

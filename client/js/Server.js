@@ -90,6 +90,12 @@ Server.prototype.setupCoreListeners = function() {
       SOSEvents.emit('conversation_loaded', data);
     }
   );
+  this._socket.on(
+    'start_conversation',
+    function(data) {
+      SOSEvents.emit('conversation_started', data);
+    }
+  );
 
 };
 
@@ -133,9 +139,10 @@ Server.prototype.authenticate = function() {
 Server.prototype.getOwnConversations = function() {
   this._socket.send('get_own_chat_ids', { token: this._token });
 };
-
+Server.prototype.StartConversation = () => {
+  this._socket.send('start_conversation', { token: this._token });
+};
 Server.prototype.loadMessages = function(chatID) {
-  console.log('Loading Messages!');
   this._socket.send(
     'load_conversation',
     {
